@@ -883,7 +883,14 @@
               "bg": "#E2F0E8",
               "color": "#217346"
             },
-              {
+            {
+              "text": "0hrs savings x 0pax",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        },
+        {
           "id": "FUTURE PLAN",
           "status": "core",
           "name": "A5.3 Other Countries",
@@ -917,13 +924,6 @@
               "bg": "#E2F0E8",
               "color": "#217346"
             },
-            {
-              "text": "0hrs savings x 0pax",
-              "bg": "#FDF0E6",
-              "color": "#C45911"
-            }
-          ]
-        },
             {
               "text": "0hrs savings x 0pax",
               "bg": "#FDF0E6",
