@@ -90,8 +90,12 @@
               "label": "Applicant ID + input date"
             },
             {
-              "role": "Selection Staff",
-              "label": "Edit/Update Applicant data"
+              "role": "Recruitment Staff",
+              "label": "Upload applicant resume, auto-fills data"
+            },
+            {
+              "role": "Selection Staff - Verifier",
+              "label": "Verify/Check Applicant data"
             },
             {
               "role": "Selection Officer",
