@@ -953,8 +953,8 @@
             }
           ],
           "data_outputs": [
-            "Expiry calendar heatmap — next 90 days",
-            "Zero-lapse compliance rate per kumiai"
+            "Visa status distribution (active / expiring / at-risk)",
+            "Escalation response time metrics"
           ],
           "tags": [
             {
