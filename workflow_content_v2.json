@@ -875,7 +875,7 @@
         {
           "id": "FUTURE PLAN",
           "status": "core",
-          "name": "A5.2 Redeploy Person - SSW 1 and SSW 2",
+          "name": "A5.2 Redeploy Employee - SSW 1 and SSW 2",
           "trigger": "TITP workers applying for SSW are automatically redirected to the requirements processing workflow, with status updates reflected in the system.",
           "features": [
             "A5.2.1 Automatic renewal and monitoring of requirements with deadline notifications",
