@@ -173,7 +173,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     </div>
     <div class="pcard" onclick="toggleP(this)">
       <div class="pcard-bar">
-        <span class="badge" style="background:#D6E4F0;color:#2B579A;border:1px solid #B3CCE6">MANUAL</span>
+        <span class="badge" style="background:#D6E4F0;color:#2B579A;border:1px solid #B3CCE6">AUTO/MANUAL</span>
         <span class="pcard-name">A1.1 Input/Edit Application Form data</span>
         <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">As Is</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">As Is</span></span>
         <span class="pcard-arrow">&#9662;</span>
@@ -186,6 +186,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
 <div class="d-item">A1.1.3 Visible data summary per applicant profile/per batch</div>
 <div class="d-item">A1.1.4 Visible data completeness summary per applicant profile/per batch</div>
 <div class="d-item">A1.1.5 Log notes (activity recording)</div>
+<div class="d-item">A1.1.6 Access for the Recruitment Team through OCR Auto-Fill Functionality</div>
 </div>
       </div>
       <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION STAFF</div><div class="appr-name">Fill-up Applicant data</div></div>
@@ -454,20 +455,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
         <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">MWO Requirements, Kumiai Agreement, and Job Order Processing Prior to Trainee Deployment</div></div>
         <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A3.2.1 Recruitment Agreement expiry notification</div>
 <div class="d-item">A3.2.2 Job order expiry</div>
-<div class="d-item">A3.2.3 Job order monitoring (Transaction Logs, JO number, JO Balance)</div>
+<div class="d-item">A3.2.3 Job Order tracking and monitoring (Transaction Logs, JO Number, JO Balance, Status Updates)</div>
+<div class="d-item">A3.2.4 Centralized Document Monitoring</div>
+<div class="d-item">A3.2.5 Audit Trail and Activity Logs</div>
 </div>
       </div>
-      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">Auto Generate</div></div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">System Generated Alert / Notification</div></div>
 <span class="arrow-sep">&rarr;</span>
-<div class="appr-card"><div class="appr-role" style="color:#0B7285">TEACHER</div><div class="appr-name">Review</div></div>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">PROCESSING STAFF</div><div class="appr-name">Review and Validate JO / Agreement Details</div></div>
 <span class="arrow-sep">&rarr;</span>
-<div class="appr-card"><div class="appr-role" style="color:#0B7285">MANAGER</div><div class="appr-name">Approve</div></div>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">MANAGER</div><div class="appr-name">Approval and Action Confirmation</div></div>
 <span class="arrow-sep">&rarr;</span>
-<div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">Auto Email</div></div>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">Email Notification and Status Update</div></div>
 </div></div>
-      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Email monthly Trainee Completion Report to Kumiai</div>
-<div class="d-item">Worker Per Kumiai/per Batch</div>
-<div class="d-item">Early warning flags for delayed trainees</div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Expiry notification reports for Recruitment Agreements and Job Orders</div>
+<div class="d-item">Monitored Job Order status and balance reports</div>
+<div class="d-item">Transaction history and audit logs of JO activities</div>
+<div class="d-item">Automated email alerts for expiring or inactive Job Orders</div>
+<div class="d-item">Summary monitoring dashboard for active and pending requirements</div>
 </div>
       </div></div>
     </div>
@@ -573,18 +578,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
 <div class="d-item">A4.1.5 Automate monthly welfare surveys via Email/LINE, with responses directly integrated into the Kiroku database.</div>
 <div class="d-item">A4.1.6 Analyze worker sentiment and allow welfare officers to manually encode welfare survey results, incidents, and case-specific observations.</div>
 <div class="d-item">A4.1.7 Trigger escalation procedures for negative welfare signals and generate weekly welfare and worker status summary reports.</div>
+<div class="d-item">A4.1.8 Welfare History and Activity Logs</div>
 </div>
       </div>
-      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">WELFARE OFFICER</div><div class="appr-name">update and approve</div></div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">WELFARE OFFICER</div><div class="appr-name">Confirm Arrival, Welfare Status, and Encode Initial Findingse</div></div>
 <span class="arrow-sep">&rarr;</span>
-<div class="appr-card"><div class="appr-role" style="color:#0B7285">HR MANAGER</div><div class="appr-name">Alert</div></div>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">HR STAFF/PROCESSING STAFF</div><div class="appr-name">Validate Placement and Worker Information</div></div>
 <span class="arrow-sep">&rarr;</span>
-<div class="appr-card"><div class="appr-role" style="color:#0B7285">ACCOUNTING MANAGER</div><div class="appr-name">Alert</div></div>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">HR MANAGER</div><div class="appr-name">Review Welfare Status and Approve Escalation Actions if Needed</div></div>
 <span class="arrow-sep">&rarr;</span>
-<div class="appr-card"><div class="appr-role" style="color:#0B7285">ADMIN STAFF</div><div class="appr-name">Alert</div></div>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">ACCOUNTING STAFF</div><div class="appr-name">Generate and Verify Billing/Invoice Processing</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">System Notification, Report Generation, and Department Alerts</div></div>
 </div></div>
-      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Batch Status Summary</div>
-<div class="d-item">Invoice Summary</div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Worker arrival and placement confirmation reports</div>
+<div class="d-item">Welfare monitoring and scheduled survey summaries</div>
+<div class="d-item">Worker sentiment analysis and flagged case reports</div>
+<div class="d-item">Incident, concern, and escalation monitoring logs</div>
+<div class="d-item">Weekly and monthly worker welfare status reports</div>
+<div class="d-item">Deployment and employer placement summaries</div>
+<div class="d-item">Invoice generation and billing status reports</div>
+<div class="d-item">Audit trail and activity history of worker status updates</div>
+<div class="d-item">Dashboard summary of active workers, welfare conditions, and pending cases</div>
 </div>
       </div></div>
     </div>
@@ -690,23 +705,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
       <div class="pcard-body"><div class="pcard-inner">
       <div class="det-grid">
         <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">Weekly Scans based on scheduled intervals (30/60/90 days post-deployment) + random flags</div></div>
-        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A4.5.1 Automated monthly welfare survey via email/LINE, delivered to Kiroku database</div>
-<div class="d-item">A4.5.2 Analyze worker sentiment from worker responses</div>
-<div class="d-item">A4.5.3 [Manual Input] Welfare officer fills up welfare survey and incidents on specific workers</div>
-<div class="d-item">A4.5.4 Triggers escalation on negative signals. Weekly Summary on welfare and worker status</div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A4.5.1 Automated status updates within the candidate profile for every renewal stage</div>
+<div class="d-item">A4.5.2 Document Deadline Monitoring</div>
+<div class="d-item">A4.5.3 Welfare &amp; Compliance Monitoring</div>
+<div class="d-item">A4.5.4 Automated Alerts &amp; Escalation</div>
 </div>
       </div>
-      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO-SEND</div><div class="appr-name">Auto-send Survey</div></div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">Generate renewal notice and update candidate status</div></div>
 <span class="arrow-sep">&rarr;</span>
-<div class="appr-card"><div class="appr-role" style="color:#2B579A">KUMIAI</div><div class="appr-name">Answer Survey</div></div>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">CANDIDATE</div><div class="appr-name">Submit renewal requirements and complete pending documents</div></div>
 <span class="arrow-sep">&rarr;</span>
-<div class="appr-card"><div class="appr-role" style="color:#0B7285">WELFARE OFFICER</div><div class="appr-name">Review and Noted, for action</div></div>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">PROCESSING STAFF / COORDINATOR</div><div class="appr-name">Review submitted documents and validate deadlines/completeness</div></div>
 <span class="arrow-sep">&rarr;</span>
-<div class="appr-card"><div class="appr-role" style="color:#0B7285">MANAGER</div><div class="appr-name">Review Weekly Summary</div></div>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">WELFARE OFFICER</div><div class="appr-name">Review Weekly Summary</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">MANAGER</div><div class="appr-name">Review renewal summary, approve escalation actions, and monitor overall compliance</div></div>
 </div></div>
-      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Welfare report per worker / per Kumiai</div>
-<div class="d-item">Early warning flags/reports for at-risk workers</div>
-<div class="d-item">For-Action List Summary</div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Renewal Status Monitoring Report</div>
+<div class="d-item">Document Expiration &amp; Deadline Report</div>
+<div class="d-item">Pending and Overdue Requirements Alert</div>
+<div class="d-item">Candidate Renewal Progress Tracker</div>
+<div class="d-item">Escalation &amp; Compliance Monitoring Report</div>
+<div class="d-item">Welfare Observation Summary</div>
+<div class="d-item">Renewal Completion Analytics per Batch/Kumiai</div>
+<div class="d-item">For-Action and Follow-up Summary</div>
+<div class="d-item">Weekly Renewal Activity Summary</div>
+<div class="d-item">Renewal Approval History &amp; Audit Trail</div>
 </div>
       </div></div>
     </div>
@@ -737,26 +761,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
     <div class="pcard" onclick="toggleP(this)">
       <div class="pcard-bar">
         <span class="badge" style="background:#D6E4F0;color:#2B579A;border:1px solid #B3CCE6">FUTURE PLAN</span>
-        <span class="pcard-name">A5.1 Recruitment/Pooling </span>
+        <span class="pcard-name">A5.1 Reemployment Recruitment &amp; Pooling Monitoring</span>
         <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">**%</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">0hrs savings x 0pax</span></span>
         <span class="pcard-arrow">&#9662;</span>
       </div>
       <div class="pcard-body"><div class="pcard-inner">
       <div class="det-grid">
         <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">Contact end of contract workers to offer new job opportunities</div></div>
-        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A5.1.1 Renewal of requirements, notifies deadline</div>
-<div class="d-item">A5.1.2 Status update</div>
-<div class="d-item">A5.1.3 New track</div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A5.1.1 Automated Reemployment Monitoring</div>
+<div class="d-item">A5.1.2 Candidate Status &amp; Availability Update</div>
+<div class="d-item">A5.1.3 Reemployment Tracking Summary</div>
 </div>
       </div>
-      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">KIROKU 24/7</div></div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">Identify eligible returnees and generate contact reminders</div></div>
 <span class="arrow-sep">&rarr;</span>
-<div class="appr-card"><div class="appr-role" style="color:#0B7285">--</div><div class="appr-name">-- (ACTION)</div></div>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">PROCESSING STAFF</div><div class="appr-name">Contact former employees and update candidate response/status</div></div>
 <span class="arrow-sep">&rarr;</span>
-<div class="appr-card"><div class="appr-role" style="color:#8B6914">SIR</div><div class="appr-name">SIR (CRITICAL ONLY)</div></div>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">RECRUITMENT</div><div class="appr-name">Evaluate interested candidates and endorse for processing</div></div>
 </div></div>
-      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Expiry calendar heatmap — next 90 days</div>
-<div class="d-item">Zero-lapse compliance rate per kumiai</div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Returnee Worker Monitoring Report</div>
+<div class="d-item">Reemployment Candidate Pool List</div>
+<div class="d-item">Contact &amp; Follow-up Tracking Summary</div>
 </div>
       </div></div>
     </div>
@@ -799,17 +824,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica N
       </div>
       <div class="pcard-body"><div class="pcard-inner">
       <div class="det-grid">
-        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">xxxx</div></div>
-        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A5.1.1 xxx</div>
-<div class="d-item">A5.1.2 xxx</div>
-<div class="d-item">A5.1.3 xxxx</div>
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">End-of-contract workers eligible for overseas redeployment</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A5.3.1 Redeployment Eligibility Monitoring</div>
+<div class="d-item">A5.3.2 Country &amp; Employer Matching</div>
+<div class="d-item">A5.3.3 International Opportunity Tracking</div>
+<div class="d-item">A5.3.4 Returnee Talent Pool Database</div>
 </div>
       </div>
-      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">KIROKU 24/7</div></div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">Identify eligible workers and available overseas opportunities</div></div>
 <span class="arrow-sep">&rarr;</span>
-<div class="appr-card"><div class="appr-role" style="color:#0B7285">--</div><div class="appr-name">-- (ACTION)</div></div>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">PROCESSING STAFF</div><div class="appr-name">update redeployment interest/status</div></div>
 <span class="arrow-sep">&rarr;</span>
-<div class="appr-card"><div class="appr-role" style="color:#8B6914">SIR</div><div class="appr-name">SIR (CRITICAL ONLY)</div></div>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">RECRUITMENT</div><div class="appr-name">Match candidates to employers and conduct assessment</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">DOCS TEAM</div><div class="appr-name">Process requirements, visa, and compliance documents</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">MANAGER</div><div class="appr-name">Review and approve final redeployment clearance</div></div>
 </div></div>
       <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Expiry calendar heatmap — next 90 days</div>
 <div class="d-item">Zero-lapse compliance rate per kumiai</div>
