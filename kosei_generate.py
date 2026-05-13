@@ -93,7 +93,7 @@ def generate():
             input("\nPress Enter to close...")
         except EOFError:
             pass
-        return
+        return 1
 
     try:
         control = load_json(CONTROL_FILE)
@@ -104,7 +104,7 @@ def generate():
             input("\nPress Enter to close...")
         except EOFError:
             pass
-        return
+        return 1
 
     colors = control.get('colors', {})
     chip_colors = control.get('chip_colors', {})
@@ -318,6 +318,7 @@ document.querySelectorAll('.topnav a').forEach(function(link){{link.addEventList
         input("Press Enter to close...")
     except EOFError:
         pass
+    return 0
 
 if __name__ == '__main__':
-    generate()
+    sys.exit(generate())

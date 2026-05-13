@@ -172,7 +172,7 @@
             "AO1.2.3 JO-to-candidate lineup",
             "AO1.2.4 Comments and activities history (log notes)",
             "AO1.2.5 Calendar Schedule"
-          ,
+          ],
           "tags": [
             {
               "text": "Automate 80%",
@@ -381,7 +381,7 @@
             "A3.1.4 Batch grouping engine (cohort management)",
             "A3.1.5 Auto-syncs Batch and Workers readiness statuses",
             "A3.1.6 Field for encoding the Job Order (JO) ID assigned to each applicant",
-            "A3.1.7 Job Order (JO) Monitoring Summary Table for encoder verification and tracking",
+            "A3.1.7 Job Order (JO) Monitoring Summary Table for encoder verification and tracking"
       
           ],
           "approval": [
@@ -568,8 +568,7 @@
           "id": "IN DEVT",
           "status": "pending",
           "name": "A4.1 Confirmation of Arrival, Placement, Worker Welfare and Status",
-          "trigger": "On worker arrival date in Japan — based on flight date & time, settle in until stable", 
-          Conduct weekly welfare scans based on scheduled post-deployment intervals (30/60/90 days) and random flagged cases.",
+          "trigger": "On worker arrival date in Japan — based on flight date & time, settle in until stable. Conduct weekly welfare scans based on scheduled post-deployment intervals (30/60/90 days) and random flagged cases.",
           "features": [
             "A4.1.1 [Manual] Update worker's arrival status in Japan",
             "A4.1.2 Triggers Invoicing draft in Accounting",
@@ -577,7 +576,7 @@
             "A4.1.4 Version control — tracks changes",
             "A4.1.5 Automate monthly welfare surveys via Email/LINE, with responses directly integrated into the Kiroku database.",
             "A4.1.6 Analyze worker sentiment and allow welfare officers to manually encode welfare survey results, incidents, and case-specific observations.",
-            "A4.1.7 Trigger escalation procedures for negative welfare signals and generate weekly welfare and worker status summary reports.",
+            "A4.1.7 Trigger escalation procedures for negative welfare signals and generate weekly welfare and worker status summary reports."
           ],
           "approval": [
             {

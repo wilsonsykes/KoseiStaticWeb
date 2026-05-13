@@ -27,6 +27,15 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Validate inputs with generator parser
+        run: |
+          python - <<'PY'
+          from kosei_generate import load_json
+          load_json("workflow_content_v2.json")
+          load_json("workflow_control.json")
+          print("Inputs parsed successfully.")
+          PY
+
       - name: Generate HTML from JSON
         run: |
           python kosei_generate.py < /dev/null
@@ -34,12 +43,12 @@ jobs:
       - name: Sync generated output to index.html
         run: |
           python - <<'PY'
-          import json
           import pathlib
           import shutil
           import os
+          from kosei_generate import load_json
           root = pathlib.Path(".")
-          control = json.loads((root / "workflow_control.json").read_text(encoding="utf-8"))
+          control = load_json(root / "workflow_control.json")
           output_name = control.get("output_file", "KOSEI_Workflow_Diagram_v2.html")
           output_path = root / output_name
           if not output_path.exists():
