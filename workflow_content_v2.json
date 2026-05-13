@@ -1,0 +1,1016 @@
+{
+  "header": {
+    "logo": "KOSEI Intelligence v1.1",
+    "kanji": "厚生",
+    "title": "Workflow Process Diagram — Future Processes vs. Current Processes",
+    "subtitle": "Pre-selection | Selection (Internal) | Pre-deployment Documents & Monitoring| Post-deployment | Status Welfare | Invoicing."
+  },
+  "hoshi_section": {
+    "title": "Selection & Deployment Pipeline",
+    "tag": "Platforms: Gsheets + Web Portal + ODOO 19 + n8n",
+    "subtitle": "Data Architecture | Unified Data | PDF OTIT/SSW Forms Autofill | Date-specific auto-setup alerts"
+  },
+  "stages": [
+    {
+      "kanji": "",
+      "romaji": "Pre/Selection",
+      "english": "JO Line-up and Fill, Candidate Profiling & Line-up",
+      "cards": [
+        {
+          "id": "FUTURE PLAN",
+          "status": "core",
+          "name": "BX1.1 Applicant Website",
+          "trigger": "Applicant enters and fills up application form and basic photos",
+          "features": [
+            "A1.1.1 Self-input basic information and photos",
+            "A1.1.2 Triggers scheduled physical/online interview with applicant",
+            "A1.1.3 Save per page",
+            "A1.1.4 Auto-assign 'Applicant No'",
+            "A1.1.5 On applicant submission — blocks pipeline advancement until 100% complete",
+            "A1.1.6 Auto-rejection of expired or invalid documents",
+            "A1.1.7 FUTURE: Google Vision AI OCR extraction (propose then confirm)"
+          ],
+          "approval": [
+            {
+              "role": "auto",
+              "label": "Assign Applicant No"
+            },
+            {
+              "role": "Applicant",
+              "label": "Fill up"
+            },
+            {
+              "role": "Recruitment Officer",
+              "label": "Reviews and Approves"
+            },
+            {
+              "role": "Manager",
+              "label": "Reviews Summary"
+            }
+          ],
+          "data_outputs": [
+            "AO1.1.1 Individual data profiles",
+            "AO1.1.2 Application rate per month %",
+            "AO1.1.3 Batch report/summary",
+            "AO1.1.4 Recruitment Analysis and Gaps"
+          ],
+          "tags": [
+            {
+              "text": "0% HOLD",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "0 hrs HOLD",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        },
+        {
+          "id": "MANUAL",
+          "status": "core",
+          "name": "A1.1 Input/Edit Application Form data",
+          "trigger": "Applicant submits an application form with documents",
+          "features": [
+            "A1.1.1 Kizuna portal (Internal use only) - data entry input Applicant details",
+            "A1.1.2 Multi-user applicant profile access",
+            "A1.1.3 Visible data summary per applicant profile/per batch",
+            "A1.1.4 Visible data completeness summary per applicant profile/per batch",
+            "A1.1.5 Log notes (activity recording)"
+          ],
+          "approval": [
+            {
+              "role": "Selection Staff",
+              "label": "Fill-up Applicant data"
+            },
+            {
+              "role": "auto",
+              "label": "Applicant ID + input date"
+            },
+            {
+              "role": "Selection Staff",
+              "label": "Edit/Update Applicant data"
+            },
+            {
+              "role": "Selection Officer",
+              "label": "Approves"
+            },
+            {
+              "role": "auto",
+              "label": "Notifies Selection Officer/Manager via email"
+            },
+            {
+              "role": "Manager",
+              "label": "Summary and Override"
+            }
+          ],
+          "data_outputs": [
+            "AO1.1.1 Applicants Summary with input dates and info fields",
+            "AO1.1.2 Candidates profiles summary",
+            "AO1.1.3 Comments and activities history"
+          ],
+          "tags": [
+            {
+              "text": "As Is",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "As Is",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        },
+        {
+          "id": "FOR TRIAL",
+          "status": "pending",
+          "name": "A1.2 JO Fulfilment, Candidate Lineup, Schedule Interview",
+          "trigger": "Kumiai sends JO requests. Lineup (3x + 1 reserved) candidates based on profile requirements | Revise candidate lineup after Kumiai rejection | Revise candidate profile based on updated/wrong info | Edit JO request details; hotel stay; interview schedule",
+          "features": [
+            "A1.2.1 Kizuna portal (Internal use only) - drag-and-drop applicant profiles",
+            "A1.2.2 Searchable Candidate data points, stages, manual candidate lineup inside each JO Card",
+            "A1.2.3 Expanded JO Card: includes Kumiai requests, trade test schedules, calendar, company trip and hotel stay and interview details",
+            "A1.2.4 Calendar Interview Schedule (Time/Blocking) & Smart Scheduling of auxiliary activities eg trade tests",
+            "A1.2.5 Auto-generate candidate profile pdf, trade test video links, click-email to Kumiai",
+            "A1.2.6 Drag-and-drop JO cards and profiles. Simple UI for updating",
+            "A1.2.7 Log notes (activity recording)",
+            "A1.2.8 Admin access - multi-period data, security, Kumiai and candidates management",
+            "A1.2.9 [FUTURE] Import data from Applicant website and Hoshi Recruit App",
+            "A1.2.10 Manual data entry of Candidate, JO, Interview Schedule data, status and stage"
+          ],
+          "approval": [
+            {
+              "role": "Selection Staff",
+              "label": "Candidate Profiles + JO Cards"
+            },
+            {
+              "role": "Selection Staff",
+              "label": "Data Entry, Prepare Lineup"
+            },
+            {
+              "role": "Selection Officer",
+              "label": "Approves/Updates/Summary"
+            },
+            {
+              "role": "auto",
+              "label": "Notifies Team regarding dates/times via email"
+            },
+            {
+              "role": "auto",
+              "label": "Notifies Kumiai via email"
+            },
+            {
+              "role": "Manager",
+              "label": "Summary and Override"
+            }
+          ],
+          "data_outputs": [
+            "AO1.2.1 JO Requests Summary with dates and info fields",
+            "AO1.2.2 Candidates profiles summary",
+            "AO1.2.3 JO-to-candidate lineup",
+            "AO1.2.4 Comments and activities history (log notes)",
+            "AO1.2.5 Calendar Schedule"
+          ],
+          "tags": [
+            {
+              "text": "Automate 80%",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "1.5hrs savings x 5pax/day",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kanji": "選定",
+      "romaji": "Selection",
+      "english": "Trade Tests & Assessment | Interview | Confirm Candidate",
+      "cards": [
+        {
+          "id": "MANUAL",
+          "status": "core",
+          "name": "A2.1 Trade Tests Media and Data Points Inputs",
+          "trigger": "Trade Test media collected",
+          "features": [
+            "A2.1.1 -",
+            "A2.1.2 -",
+            "A2.1.3 -",
+            "A2.1.4 -"
+          ],
+          "approval_label": "Approval Matrix",
+          "approval": [
+            {
+              "role": "IT Staff",
+              "label": "Collect Media"
+            },
+            {
+              "role": "Selection Officer",
+              "label": "Reviews"
+            },
+            {
+              "role": "Client Manager",
+              "label": ""
+            },
+            {
+              "role": "",
+              "label": ""
+            }
+          ],
+          "data_outputs": [
+            "Curated shortlist with match scores"
+          ],
+          "tags": [
+            {
+              "text": "As Is",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "As Is",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        },
+        {
+          "id": "MANUAL",
+          "status": "core",
+          "name": "A2.2 Online Interview/Selection",
+          "trigger": "Kumiai requests for online interview/selection process",
+          "features": [
+            "A2.2.1 Same as current online interview process",
+            "A2.2.2 -",
+            "A2.2.3 -"
+          ],
+          "approval": [
+             {
+              "role": "Selection Staff",
+              "label": "Update candidate profile for 'Interview Type', complete profile data and trade test links"
+            },
+            {
+              "role": "Selection Officer",
+              "label": "Verify candidate lineup, fulfil Kumiai requests, until selected"
+            },
+            {
+              "role": "Kumiai",
+              "label": "Evaluate & Select"
+            }
+          ],
+          "data_outputs": [
+            "AO2.2.1 -",
+            "Overdue registration exception report"
+          ],
+          "tags": [
+            {
+              "text": "As Is",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "As Is",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        },
+        {
+          "id": "MANUAL",
+          "status": "core",
+          "name": "A2.3 Physical Interview/Selection",
+          "trigger": "Kumiai requests for physical interview/selection process",
+          "features": [
+            "A2.3.1 As is",
+            "A2.3.2 -",
+            "A2.3.3 -"
+          ],
+          "approval": [
+              {
+              "role": "Selection Staff",
+              "label": "Update candidate profile for 'Interview Type', complete profile data and trade test links"
+            },
+            {
+              "role": "Selection Officer",
+              "label": "Verify candidate lineup, fulfil Kumiai requests, until selected"
+            },
+            {
+              "role": "Kumiai",
+              "label": "Evaluate & Select"
+            }
+          ],
+          "data_outputs": [
+            "AO2.3.1 -",
+            "AO2.3.2 -"
+          ],
+          "tags": [
+            {
+              "text": "As Is",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "As Is",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        },
+        {
+          "id": "FOR TRIAL",
+          "status": "pending",
+          "name": "A2.4 Portal Selection",
+          "trigger": "Kumiai chooses candidate solely on Kizuna portal",
+          "features": [
+            "A2.4.1 Password-protected portal page, link sent via email",
+            "A2.4.2 Multi-candidate profiles via side-by-side presentation",
+            "A2.4.3 -"
+          ],
+          "approval": [
+            {
+              "role": "Selection Staff",
+              "label": "Update candidate profile for 'Interview Type', complete profile data and trade test links"
+            },
+            {
+              "role": "Selection Officer",
+              "label": "Verify candidate lineup, fulfil Kumiai requests, until selected"
+            },
+            {
+              "role": "Kumiai",
+              "label": "Evaluate & Select"
+            }
+          ],
+          "data_outputs": [
+            "AO2.4.1 Portal - candidate profiles comparison page",
+            ""
+          ],
+          "tags": [
+            {
+              "text": "**%",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "0hrs savings x 0pax",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kanji": "訓練",
+      "romaji": "Pre-deployment",
+      "english": "Pre-Deployment | Submit Documents | Kumiai Updates",
+      "cards": [
+        {
+          "id": "IN DEVT",
+          "status": "pending",
+          "name": "A3.1 Candidate Status Update",
+          "trigger": "Kumiai approves selected candidate - becomes trainee",
+          "features": [
+            "A3.1.1 Triggers COE-related documentation deadlines",
+            "A3.1.2 Triggers other deadlines for pre-deployment",
+            "A3.1.3 [Manual] Conduct/Attendance + monthly scores to Odoo worker profile",
+            "A3.1.4 Batch grouping engine (cohort management)",
+            "A3.1.5 Auto-syncs Batch and Workers readiness statuses"
+          ],
+          "approval": [
+            {
+              "role": "Selection Staff",
+              "label": "[Manual] Input selected candidates"
+            },
+            {
+              "role": "Selection Officer",
+              "label": "Approve"
+            },
+            {
+              "role": "Staff",
+              "label": "Deadlines Alert"
+            },
+            {
+              "role": "Manager",
+              "label": "Deadlines Alert"
+            }
+          ],
+          "data_outputs": [
+            "Jap Language score progression per trainee",
+            "Target deadline alerts",
+            "Batch readiness (training and documentation) % dashboard",
+            "Training-to-deployment conversion rate"
+          ],
+          "tags": [
+            {
+              "text": "**%",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "0hrs savings x 0pax",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        },
+        {
+          "id": "IN DEVT",
+          "status": "pending",
+          "name": "A3.2 MWO certificate for Company",
+          "trigger": "When candidate is selected",
+          "features": [
+            "A3.2.1 Automated progression summary",
+            "A3.2.2 -Auto-fill docs for MWO Certificate",
+            "-"
+          ],
+          "approval": [
+            {
+              "role": "auto",
+              "label": "Auto Generate"
+            },
+            {
+              "role": "Teacher",
+              "label": "Review"
+            },
+            {
+              "role": "Manager",
+              "label": "Approve"
+            },
+            {
+              "role": "auto",
+              "label": "Auto Email"
+            }
+          ],
+          "data_outputs": [
+            "Email monthly Trainee Completion Report to Kumiai",
+            "Worker Per Kumiai/per Batch",
+            "Early warning flags for delayed trainees"
+          ],
+          "tags": [
+            {
+              "text": "**%",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "0hrs savings x 0pax",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        },
+        {
+          "id": "FOR TRIAL",
+          "status": "pending",
+          "name": "A3.3 Generate Documents - Contract, Docs for COE",
+          "trigger": "On placement confirmation — auto-generates employment contract from System template",
+          "features": [
+            "A3.3.1 Template engine — TITP / SSW1 / SSW2 contract variants",
+            "A3.3.2 Auto-populates worker, kumiai, wage, duration fields, and others",
+            "A3.3.3 PDF generation",
+            "A3.3.4 Version control — tracks all contract amendments"
+          ],
+          "approval": [
+            {
+              "role": "auto",
+              "label": "System Generate"
+            },
+            {
+              "role": "Documents Officer",
+              "label": "Check"
+            },
+            {
+              "role": "Trainee",
+              "label": "Check and sign"
+            },
+            {
+              "role": "?kumiai",
+              "label": "(?on hold for discussion)"
+            }
+          ],
+          "data_outputs": [
+            "(70% complete) Contract draft for trainee",
+            "(Manual) Contract status tracker (from draft to signed to filed)",
+            "Ready contract archive in Odoo Docs"
+          ],
+          "tags": [
+            {
+              "text": "**%",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "0hrs savings x 0pax",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        },
+        {
+          "id": "MANUAL",
+          "status": "core",
+          "name": "A3.4 Receive COE - Generate Final Docs for EOC, visa, ticket",
+          "trigger": "On receipt of COE — auto-generates employment contract from Odoo template",
+          "features": [
+            "A3.4.1 [Manual] Update EOC, Visa, Ticket statuses",
+            "A3.4.2 ?Auto-updates Kumiai?",
+            "A3.4.3 -",
+            "A3.4.4 -"
+          ],
+          "approval": [
+            {
+              "role": "Ticket Officer",
+              "label": "[Manual] System status update"
+            },
+            {
+              "role": "Deploy Manager",
+              "label": "Check"
+            },
+            {
+              "role": "Manager",
+              "label": "(SIGN-OFF)"
+            }
+          ],
+          "data_outputs": [
+            "Post-COE documents",
+            "Pre-deployment worker status tracker"
+          ],
+          "tags": [
+            {
+              "text": "**%",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "0hrs savings x 0pax",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kanji": "配置",
+      "romaji": "Post-deployment",
+      "english": "Invoice Alert | Welfare | Document Expiry",
+      "cards": [
+        {
+          "id": "IN DEVT",
+          "status": "pending",
+          "name": "A4.1 Confirm Arrival, Placement Welfare",
+          "trigger": "On worker arrival date in Japan — based on flight date & time, settle in until stable",
+          "features": [
+            "A4.1.1 [Manual] Update worker's arrival status in Japan",
+            "A4.1.2 Triggers Invoicing draft in Accounting",
+            "A4.1.3 Sends update alert to respective staff (HR, Admin, Acctg)",
+            "A4.1.4 Version control — tracks changes"
+          ],
+          "approval": [
+            {
+              "role": "welfare officer",
+              "label": "update and approve"
+            },
+            {
+              "role": "HR manager",
+              "label": "Alert"
+            },
+            {
+              "role": "accounting manager",
+              "label": "Alert"
+            },
+            {
+              "role": "Admin staff",
+              "label": "Alert"
+            }
+          ],
+          "data_outputs": [
+            "Batch Status Summary",
+            "Invoice Summary"
+          ],
+          "tags": [
+            {
+              "text": "**%",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "0hrs savings x 0pax",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        },
+        {
+          "id": "IN DEVT",
+          "status": "pending",
+          "name": "A4.2 Invoice Clients",
+          "trigger": "On confirmed arrival in Japan — auto-generates placement fee invoices | On monthly invoice dates - auto-generate invoice",
+          "features": [
+            "A4.2.1 Fee calculation engine (per worker x rate x kumiai terms)",
+            "A4.2.2 Auto-invoice via Odoo Accounting module",
+            "A4.2.3 Receivables aging tracker with auto-reminders at 15/30/60 days",
+            "A4.2.4 Invoicing stops depending on worker status",
+            "A4.2.5 [Manual Input] Update/Revise invoice data such as dates, amounts",
+            "A4.2.6 Escalates issues/alerts to Manager, gives a Weekly Summary"
+          ],
+          "approval": [
+            {
+              "role": "auto",
+              "label": "Auto Generate"
+            },
+            {
+              "role": "Accounting Officer",
+              "label": "Check Invoice"
+            },
+            {
+              "role": "Accounting Manager",
+              "label": "Approve Invoice"
+            }
+          ],
+          "data_outputs": [
+            "Missed Invoice and Invoice statuses",
+            "Revenue Summary per kumiai / per trade / per month",
+            "Outstanding receivables aging report",
+            "Placement fee forecast vs. actuals"
+          ],
+          "tags": [
+            {
+              "text": "**%",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "0hrs savings x 0pax",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        },
+        {
+          "id": "IN DEVT",
+          "status": "pending",
+          "name": "A4.3 Get Client Feedback on Worker Performance",
+          "trigger": "Annually or Bi-annual performance and attendance evaluation from Kumiai or client",
+          "features": [
+            "A4.3.1 Fill up Evaluation Sheet in email and auto-fills Kiroku database",
+            "A4.3.2 Tiered alert grading (green, amber, red, critical",
+            "A4.3.3 Escalates issues/alerts to Manager, individually or by batch. Gives Weekly Summary",
+            "A4.3.4 Upon Mgr approval, Welfare Officer contacts worker for performance feedback"
+          ],
+          "approval": [
+            {
+              "role": "auto-email",
+              "label": "Auto-send Evaluation in Email"
+            },
+            {
+              "role": "Kumiai",
+              "label": "KUMIAI answer and confirm"
+            },
+            {
+              "role": "Manager",
+              "label": "Review Summary"
+            },
+            {
+              "role": "Welfare Officer",
+              "label": "Review Summary/Update Worker Profile"
+            }
+          ],
+          "data_outputs": [
+            "Performance Evaluation Sheet",
+            "Worker Performance dashboard",
+            "Tiered grading Workers summary"
+          ],
+          "tags": [
+            {
+              "text": "**%",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "0hrs savings x 0pax",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        },
+        {
+          "id": "IN DEVT",
+          "status": "pending",
+          "name": "A4.4 Document Expiry Alerts",
+          "trigger": "Weekly scans — flags documents expiring within 90/60/30/15 days",
+          "features": [
+            "A4.4.1. KIROKU monitors all doc types: visa, passport, COE, insurance",
+            "A4.4.2. Tiered alert severity (green, amber, red, critical)",
+            "A4.4.3. Auto-emails to responsible parties with renewal instructions",
+            "A4.4.4. Escalates issues/alerts to Manager, individually or by batch. Gives Weekly Summary"
+          ],
+          "approval": [
+            {
+              "role": "auto",
+              "label": "Odoo Action 24/7"
+            },
+            {
+              "role": "Docu Officer",
+              "label": "for action"
+            },
+            {
+              "role": "HR Mgr",
+              "label": "Review Weekly Summary"
+            }
+          ],
+          "data_outputs": [
+            "Expiry calendar report — next 90 days",
+            "Compliance rate report - per Kumiai"
+          ],
+          "tags": [
+            {
+              "text": "**%",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "0hrs savings x 0pax",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        },
+        {
+          "id": "IN DEVT",
+          "status": "pending",
+          "name": "A4.5 Worker Welfare and Status",
+          "trigger": "Weekly Scans based on scheduled intervals (30/60/90 days post-deployment) + random flags",
+          "features": [
+            "A4.5.1 Automated monthly welfare survey via email/LINE, delivered to Kiroku database",
+            "A4.5.2 Analyze worker sentiment from worker responses",
+            "A4.5.3 [Manual Input] Welfare officer fills up welfare survey and incidents on specific workers",
+            "A4.5.4 Triggers escalation on negative signals. Weekly Summary on welfare and worker status"
+          ],
+          "approval": [
+            {
+              "role": "Auto-send",
+              "label": "Auto-send Survey"
+            },
+            {
+              "role": "Kumiai",
+              "label": "Answer Survey"
+            },
+            {
+              "role": "Welfare Officer",
+              "label": "Review and Noted, for action"
+            },
+            {
+              "role": "Manager",
+              "label": "Review Weekly Summary"
+            }
+          ],
+          "data_outputs": [
+            "Welfare report per worker / per Kumiai",
+            "Early warning flags/reports for at-risk workers",
+            "For-Action List Summary"
+          ],
+          "tags": [
+            {
+              "text": "**%",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "0hrs savings x 0pax",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kanji": "管理",
+      "romaji": "Redeployment (On Hold)",
+      "english": "Assess Personnel | Renew Contract | Next Country Postings",
+      "cards": [
+        {
+          "id": "FUTURE PLAN",
+          "status": "core",
+          "name": "A5.1 Document Expiry Alerts",
+          "trigger": "Daily scan — flags documents expiring within 90/60/30/15 days",
+          "features": [
+            "A5.1.1 KIROKU monitors all doc types: visa, passport, COE, insurance",
+            "A5.1.2 Tiered alert severity (green, amber, red, critical)",
+            "A5.1.3 Auto-emails to responsible parties with renewal instructions"
+          ],
+          "approval": [
+            {
+              "role": "auto",
+              "label": "KIROKU 24/7"
+            },
+            {
+              "role": "--",
+              "label": "-- (ACTION)"
+            },
+            {
+              "role": "sir",
+              "label": "SIR (CRITICAL ONLY)"
+            }
+          ],
+          "data_outputs": [
+            "Expiry calendar heatmap — next 90 days",
+            "Zero-lapse compliance rate per kumiai"
+          ],
+          "tags": [
+            {
+              "text": "**%",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "0hrs savings x 0pax",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        },
+        {
+          "id": "FUTURE PLAN",
+          "status": "core",
+          "name": "A5.2 Redeploy Person - SSW Upgrade or Other Countries",
+          "trigger": "Finishing contract in 90/60/30 days",
+          "features": [
+            "A5.2.1 SSW-specific regulatory timeline engine",
+            "A5.2.2 Assess worker's performance, attend checkups and trade tests",
+            "A5.2.3 Update personal bio-data via Worker ID and database",
+            "A5.2.4 Auto-escalation: staff, Mgr, CEO, Kumiai notification",
+            "A5.2.5 Government portal submission tracking"
+          ],
+          "approval": [
+            {
+              "role": "auto",
+              "label": "SYSTEM DETECT"
+            },
+            {
+              "role": "--",
+              "label": "--"
+            },
+            {
+              "role": "sir",
+              "label": "SIR"
+            },
+            {
+              "role": "kumiai",
+              "label": "KUMIAI (NOTIFY)"
+            }
+          ],
+          "data_outputs": [
+            "Visa status distribution (active / expiring / at-risk)",
+            "Escalation response time metrics"
+          ],
+          "tags": [
+            {
+              "text": "**%",
+              "bg": "#E2F0E8",
+              "color": "#217346"
+            },
+            {
+              "text": "0hrs savings x 0pax",
+              "bg": "#FDF0E6",
+              "color": "#C45911"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "cross_stage": {
+    "id": "P14",
+    "name": "Pipeline Stall Detection (DO NOT READ- ON HOLD)",
+    "description": "Monitors all 5 stages for bottlenecks exceeding SLA thresholds",
+    "features": [
+      "SLA timer per pipeline stage (configurable per kumiai)",
+      "Auto-escalation when candidate stalls at any gate beyond threshold days",
+      "Bottleneck visualization — identifies systemic slowdowns"
+    ],
+    "approval": [
+      {
+        "role": "auto",
+        "label": "SYSTEM SCAN"
+      },
+      {
+        "role": "Officer",
+        "label": "Update & Approve"
+      },
+      {
+        "role": "Manager",
+        "label": "Review & Override"
+      }
+    ],
+    "data_outputs": [
+      "Avg days per stage — actual vs. target",
+      "Deployment cycle time (target: 4 months from intake to arrival)",
+      "Stall frequency heatmap by stage and kumiai"
+    ],
+    "tags": [
+      {
+        "text": "**%",
+        "bg": "#E2F0E8",
+        "color": "#217346"
+      },
+      {
+        "text": "0hrs savings x 0pax",
+        "bg": "#FDF0E6",
+        "color": "#C45911"
+      }
+    ]
+  },
+  "manual_section": {
+    "title": "Current Processes (C)",
+    "tag": "PAPER + EXCEL + GSHEET + EMAIL + PHONE",
+    "subtitle": "Reactive, error-prone, zero autonomous monitoring — every action requires human initiation"
+  },
+  "manual_stages": [
+    {
+      "kanji": "募集",
+      "english": "Recruitment Intake",
+      "pain_points": [
+        "C1.1 Applicants walk-in the office. Submits Application forms and docs",
+        "C1.2 Front Desk Give Google Form and IQ Test. Check documents based on paper checklist",
+        "C1.3 Nurse Checks bio-measures.",
+        "C1.4 Applicant interview and Input Candidate Profiles in Porters.",
+        "C1.5 Assemble candidate list by manual sorting, from Porters. Email Candidate Profile to Kumiai"
+      ]
+    },
+    {
+      "kanji": "選定",
+      "english": "Assessment & Selection",
+      "pain_points": [
+        "C2.1 Schedule candidates for trade tests. IT staff conduct and record trade tests. Edit media. Send media.",
+        "C2.2 Physical: Schedule the visit, hotel and vehicle service. Receive/Host the Kumiai and Company for selection trip",
+        "C2.3 Online: Schedule zoom call interview, inform candidates of schedule",
+        "C2.4 Update and consolidate Interview Calendar",
+        "C2.5 Upon selection, email Kumiai. Start language training and documents. Update Porters."
+      ]
+    },
+    {
+      "kanji": "訓練",
+      "english": "Training Management",
+      "pain_points": [
+        "C3A.1 TRAINING PATH: Attend 9 modules. Record attendance sheets. Record weekly Japanese grades.",
+        "C3A.2 Email Kumiai with individual results monthly (4x per training period)",
+        "C3A.3 Prepare for JLPT N5 in the last month",
+        "C3A.4 Insert ESD-related language training requirements",
+        "C3B.1 DOCUMENTS PATH: Type and prepare OTIT Docs, MWO Docs, DMW Docs for COE",
+        "C3B.2 After COE, docs for EOC, visa, and air ticket"
+      ]
+    },
+    {
+      "kanji": "配置",
+      "english": "Placement & Deployment",
+      "pain_points": [
+        "C4.1 Confirm arrival in Japan and entry to company",
+        "C4.2 Acctg staff make and send invoice clients",
+        "C4.3 Welfare Officer check worker welfare and status",
+        "C4.4 oo",
+        "C4.5 oo"
+      ]
+    },
+    {
+      "kanji": "管理",
+      "english": "Post-Deploy Monitoring",
+      "pain_points": [
+        "C5.1",
+        "C5.2",
+        "C5.3",
+        "C5.4",
+        "C5.5"
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "value": "5 to 4 mo",
+      "label": "Cycle Compression",
+      "detail": "Avg deployment intake to arrival"
+    },
+    {
+      "value": "24/7",
+      "label": "Autonomous Monitoring",
+      "detail": "vs. manual monitoring "
+    },
+    {
+      "value": "XX",
+      "label": "Automated Processes",
+      "detail": "P1-P6 live, P7-P14 in build"
+    },
+    {
+      "value": "25x",
+      "label": "ROI Target",
+      "detail": "Revenue capture + cost savings"
+    }
+  ],
+  "footer": "KOSEI Intelligence — Workflow Process Diagram v1.1 — Confidential"
+}

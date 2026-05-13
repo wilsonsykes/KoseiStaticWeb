@@ -1,0 +1,86 @@
+{
+  "_README": "CONTROL CENTER — Change layout, colors, and structure here. The Python generator reads this + content JSON to produce HTML.",
+
+  "output_file": "KOSEI_Workflow_Diagram_v2.html",
+
+  "layout": {
+    "min_stage_width_px": 260,
+    "min_pipeline_width_px": 1380,
+    "stage_border_radius": "6px",
+    "card_border_radius": "6px"
+  },
+
+  "fonts": {
+    "family": "'Segoe UI', Calibri, Arial, sans-serif",
+    "google_font_url": ""
+  },
+
+  "colors": {
+    "accent":       "#2B579A",
+    "accent_light": "#D6E4F0",
+    "accent_dark":  "#1B3A65",
+    "green":        "#217346",
+    "green_light":  "#E2F0E8",
+    "orange":       "#C45911",
+    "orange_light": "#FDF0E6",
+    "red":          "#C00000",
+    "red_light":    "#FCE8E8",
+    "purple":       "#7030A0",
+    "purple_light": "#F0E6F6",
+    "teal":         "#0B7285",
+    "teal_light":   "#E6F4F7",
+    "background":   "#FFFFFF",
+    "background_alt": "#F7F8FA",
+    "border":       "#D9DDE4",
+    "border_light": "#EBEDF0",
+    "text":         "#1A1A2E",
+    "text_mid":     "#444B5A",
+    "text_light":   "#727A8C"
+  },
+
+  "chip_colors": {
+    "auto":   { "bg": "{teal_light}",   "text": "{teal}",   "border": "#B0D7DD" },
+    "maria":  { "bg": "#FDE8E8",        "text": "{red}",    "border": "#F0C0C0" },
+    "sir":    { "bg": "#FFF3D6",        "text": "#8B6914",  "border": "#E8D5A0" },
+    "sakura": { "bg": "#F5E6FA",        "text": "{purple}", "border": "#D8BEE8" },
+    "kumiai": { "bg": "{accent_light}", "text": "{accent}",  "border": "#B3CCE6" },
+    "shouka": { "bg": "{green_light}",  "text": "{green}",   "border": "#B0D4BC" }
+  },
+
+  "badge_styles": {
+    "active":  { "bg": "{green_light}",  "text": "{green}",  "border": "#B7D8C4" },
+    "pending": { "bg": "{orange_light}", "text": "{orange}", "border": "#F0D0B0" },
+    "core":    { "bg": "{accent_light}", "text": "{accent}", "border": "#B3CCE6" },
+    "cross":   { "bg": "{purple_light}", "text": "{purple}", "border": "#D0B8E0" }
+  },
+
+  "legend_items": [
+    { "color": "{green}",  "label": "Active" },
+    { "color": "{orange}", "label": "Pending / Under Development / For Trial" },
+    { "color": "{purple}", "label": "Cross-Stage" },
+    { "color": "{accent}", "label": "Manual / Remain as is / For Future Plan" }
+  ],
+
+  "sections": {
+    "show_hoshi_pipeline": true,
+    "show_cross_stage": true,
+    "show_manual_pipeline": true,
+    "show_metrics_strip": true,
+    "show_legend": true
+  },
+
+  "detail_labels": {
+    "trigger": "Trigger",
+    "features": "System Features",
+    "approval": "Approval Matrix",
+    "data": "Data Outputs"
+  },
+
+  "manual_pain_title": "Pain Points",
+  "vs_label": "VS",
+  "expand_all_label": "Expand All",
+  "collapse_all_label": "Collapse All",
+  "print_label": "Print (Short Bond)",
+  "print_page_size": "8.5in 13in",
+  "print_page_margin": "0.4in 0.5in"
+}
