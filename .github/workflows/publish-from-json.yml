@@ -27,14 +27,9 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Validate inputs with generator parser
+      - name: Validate JSON structure and content
         run: |
-          python - <<'PY'
-          from kosei_generate import load_json
-          load_json("workflow_content_v2.json")
-          load_json("workflow_control.json")
-          print("Inputs parsed successfully.")
-          PY
+          python scripts/validate_workflow_json.py
 
       - name: Generate HTML from JSON
         run: |
