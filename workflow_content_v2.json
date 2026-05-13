@@ -773,7 +773,7 @@
           "id": "IN DEVT",
           "status": "pending",
           "name": "A4.5 TITP Renewal (Ichigo, Sanggou)",
-          "trigger": "Weekly Scans based on scheduled intervals (30/60/90 days post-deployment) + random flags",
+          "trigger": "Renewal status of workers is monitored and updated.",
           "features": [
             "A4.5.1 Automated status updates within the candidate profile for every renewal stage",
             "A4.5.2 Document Deadline Monitoring",
@@ -805,13 +805,9 @@
           "data_outputs": [
             "Renewal Status Monitoring Report",
             "Document Expiration & Deadline Report",
-            "Pending and Overdue Requirements Alert",
             "Candidate Renewal Progress Tracker",
-            "Escalation & Compliance Monitoring Report",
-            "Welfare Observation Summary",
             "Renewal Completion Analytics per Batch/Kumiai",
             "For-Action and Follow-up Summary",
-            "Weekly Renewal Activity Summary",
             "Renewal Approval History & Audit Trail",
           ],
           "tags": [
