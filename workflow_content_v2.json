@@ -887,12 +887,12 @@
               {
           "id": "FUTURE PLAN",
           "status": "core",
-          "name": "A5.1 Document Expiry Alerts",
-          "trigger": "Daily scan — flags documents expiring within 90/60/30/15 days",
+          "name": "A5.3 Other Countries",
+          "trigger": "xxxx",
           "features": [
-            "A5.1.1 KIROKU monitors all doc types: visa, passport, COE, insurance",
-            "A5.1.2 Tiered alert severity (green, amber, red, critical)",
-            "A5.1.3 Auto-emails to responsible parties with renewal instructions"
+            "A5.1.1 xxx",
+            "A5.1.2 xxx",
+            "A5.1.3 xxxx"
           ],
           "approval": [
             {
