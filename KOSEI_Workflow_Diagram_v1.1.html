@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workflow Process Diagram — Future Processes vs. Current Processes</title>
+<style>
+:root{--accent:#2B579A;--accent-light:#D6E4F0;--accent-dark:#1B3A65;--green:#217346;--green-light:#E2F0E8;--orange:#C45911;--orange-light:#FDF0E6;--red:#C00000;--red-light:#FCE8E8;--purple:#7030A0;--purple-light:#F0E6F6;--teal:#0B7285;--teal-light:#E6F4F7;--bg:#FFFFFF;--bg-alt:#F7F8FA;--border:#D9DDE4;--border-light:#EBEDF0;--text:#1A1A2E;--text-mid:#444B5A;--text-light:#727A8C;--radius:6px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Calibri,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+.topnav{position:sticky;top:0;z-index:100;background:var(--accent-dark);display:flex;align-items:center;gap:0;padding:0 24px;height:44px;overflow-x:auto}
+.nav-logo{font-size:14px;font-weight:700;color:#fff;margin-right:20px;white-space:nowrap}
+.nav-link{font-size:12px;color:rgba(255,255,255,.7);text-decoration:none;padding:10px 14px;white-space:nowrap;transition:color .15s}
+.nav-link:hover{color:#fff}
+.header{padding:36px 48px 28px;border-bottom:3px solid var(--accent)}
+.header-top{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.header-logo{font-size:28px;font-weight:700;color:var(--accent-dark)}
+.header-kanji{font-size:16px;color:var(--text-light)}
+.header h1{font-size:18px;font-weight:600;margin-bottom:4px}
+.header p{font-size:13px;color:var(--text-light);max-width:800px;line-height:1.6}
+.legend-bar{display:flex;gap:20px;padding:10px 48px;border-bottom:1px solid var(--border-light);background:var(--bg-alt);flex-wrap:wrap;align-items:center}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-mid)}
+.legend-dot{width:10px;height:10px;border-radius:50%}
+.ctrl-btns{margin-left:auto;display:flex;gap:6px}
+.ctrl-btn{background:var(--bg);border:1px solid var(--border);color:var(--text-mid);padding:5px 16px;border-radius:4px;font-size:12px;font-family:inherit;cursor:pointer;transition:all .15s}
+.ctrl-btn:hover{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+.stage-section{margin:16px 48px 0;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--bg)}
+.stage-banner{display:flex;align-items:center;gap:20px;padding:20px 28px;cursor:pointer;transition:background .15s}
+.stage-banner:hover{background:var(--bg-alt)}
+.stage-num{width:56px;height:56px;border-radius:10px;background:var(--accent-dark);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.num-big{font-size:22px;font-weight:700;line-height:1}.num-sub{font-size:12px;font-weight:600;letter-spacing:1px;opacity:.7}
+.cross-num{background:var(--purple)}
+.stage-info{flex-shrink:0;min-width:180px}
+.stage-title{font-size:16px;font-weight:700;color:var(--accent-dark);text-transform:uppercase;letter-spacing:.5px}
+.stage-sub{font-size:12px;color:var(--text-light);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+.stage-arrow{font-size:12px;color:var(--text-light);transition:transform .2s;flex-shrink:0}
+.stage-section.open .stage-arrow{transform:rotate(180deg)}
+.stage-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.stage-section.open .stage-body{max-height:8000px}
+.two-col{display:flex;gap:0;border-top:1px solid var(--border-light)}
+.future-col{flex:3;padding:16px 20px;border-right:1px solid var(--border-light)}
+.manual-col{flex:2;padding:16px 20px;background:linear-gradient(135deg,#F5F6F8,#ECEEF2)}
+.col-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.col-dot{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.future-dot{background:var(--green-light);color:var(--green)}.manual-dot{background:#E8E9ED;color:#6B7280}
+.col-title{font-size:12px;font-weight:700;letter-spacing:1px}
+.future-title{color:var(--green)}.manual-title{color:#6B7280}
+.col-tag{font-size:12px;font-weight:600;padding:2px 8px;border-radius:3px;margin-left:auto;letter-spacing:.3px}
+.future-tag{background:var(--accent-light);color:var(--accent);border:1px solid #B3CCE6}
+.manual-tag{background:#E8E9ED;color:#6B7280;border:1px solid #D1D5DB}
+.pcard{margin:6px 0;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg);overflow:hidden;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.pcard:hover{border-color:var(--accent);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.pcard.open{border-color:var(--accent);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.pcard-bar{display:flex;align-items:center;gap:8px;padding:10px 14px}
+.badge{font-size:12px;font-weight:700;padding:3px 8px;border-radius:3px;white-space:nowrap}
+.pcard-name{font-size:13px;font-weight:600;color:var(--text);flex:1}
+.st-dot{width:8px;height:8px;border-radius:50%}.st-active{background:var(--green)}.st-pending{background:var(--orange)}
+.pcard-arrow{font-size:12px;color:var(--text-light);transition:transform .2s}
+.pcard.open .pcard-arrow{transform:rotate(180deg)}
+.pcard-body{max-height:0;overflow:hidden;transition:max-height .35s ease;border-top:1px solid transparent}
+.pcard.open .pcard-body{max-height:1200px;border-top:1px solid var(--border-light)}
+.pcard-inner{padding:14px 16px;background:var(--bg-alt)}
+.card-tags{display:flex;gap:5px;margin-left:auto;flex-shrink:0}
+.card-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:3px;white-space:nowrap;letter-spacing:.3px;text-transform:uppercase}
+.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
+.d-group{margin-bottom:9px}.d-group:last-child{margin-bottom:0}
+.d-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;color:var(--text-light)}
+.d-label.lbl-trigger{color:var(--orange)}.d-label.lbl-features{color:var(--teal)}.d-label.lbl-approval{color:var(--purple)}.d-label.lbl-data{color:var(--green)}
+.d-item{font-size:12px;color:var(--text-mid);line-height:1.7;padding-left:14px;position:relative}
+.d-item::before{content:'\2022';position:absolute;left:2px;color:var(--text-light);font-size:12px}
+.appr-flow{display:flex;gap:6px;flex-wrap:wrap;align-items:stretch;margin-top:6px}
+.appr-card{border:1px solid var(--border);border-radius:var(--radius);padding:7px 14px;background:var(--bg);min-width:100px}
+.appr-role{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.appr-name{font-size:12px;font-weight:600;color:var(--text)}
+.arrow-sep{display:flex;align-items:center;color:var(--text-light);font-size:16px}
+.pain-row{font-size:13px;color:#4B5563;line-height:1.8;padding:3px 0;display:flex;gap:8px;align-items:baseline}
+.pain-icon{color:#9CA3AF;font-size:14px;flex-shrink:0}
+.cross-section{border-color:#D0B8E0}.cross-banner{border-left:3px solid var(--purple)}.cross-inner{padding:20px 28px}
+.metrics-strip{margin:20px 48px;padding:18px 24px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg-alt);display:flex;justify-content:space-around;flex-wrap:wrap;gap:8px}
+.metric{text-align:center;padding:6px 14px}.metric-val{font-size:26px;font-weight:700;color:var(--accent-dark)}
+.metric-lbl{font-size:12px;font-weight:600;color:var(--text-mid);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.metric-sub{font-size:12px;color:var(--text-light);margin-top:1px}
+.footer{padding:18px 48px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--text-light);background:var(--bg-alt);margin-top:20px}
+@media print{.topnav,.ctrl-btns,.footer button{display:none!important}.stage-body,.pcard-body{max-height:none!important}.stage-section{page-break-inside:avoid}}
+@media(max-width:900px){.header,.legend-bar,.stage-section,.metrics-strip{margin-left:12px;margin-right:12px;padding-left:16px;padding-right:16px}.two-col{flex-direction:column}.future-col{border-right:none;border-bottom:1px solid var(--border-light)}.det-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="topnav">
+  <div class="nav-logo">KOSEI Intelligence v1.1</div>
+  <a href="#stage-1" class="nav-link">1&middot;Pre/Selection</a>
+  <a href="#stage-2" class="nav-link">2&middot;Selection</a>
+  <a href="#stage-3" class="nav-link">3&middot;Pre-deployment</a>
+  <a href="#stage-4" class="nav-link">4&middot;Post-deployment</a>
+  <a href="#stage-5" class="nav-link">5&middot;Redeployment (On Hold)</a>
+  <a href="#cross-stage" class="nav-link">Cross-Stage</a>
+</div>
+
+<div class="header">
+  <div class="header-top"><div class="header-logo">KOSEI Intelligence v1.1</div><span class="header-kanji">厚生</span></div>
+  <h1>Workflow Process Diagram — Future Processes vs. Current Processes</h1>
+  <p>Pre-selection | Selection (Internal) | Pre-deployment Documents &amp; Monitoring| Post-deployment | Status Welfare | Invoicing.</p>
+</div>
+
+<div class="legend-bar">
+  <div class="legend-item"><div class="legend-dot" style="background:#217346"></div> Active</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#C45911"></div> Pending / Under Development / For Trial</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#7030A0"></div> Cross-Stage</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#2B579A"></div> Manual / Remain as is / For Future Plan</div>
+  <div class="ctrl-btns">
+    <button class="ctrl-btn" onclick="expandAll()">Expand All</button>
+    <button class="ctrl-btn" onclick="collapseAll()">Collapse All</button>
+    <button class="ctrl-btn" onclick="printShortBond()">&#128424; Print (Short Bond)</button>
+  </div>
+</div>
+
+<div class="stage-section" id="stage-1">
+  <div class="stage-banner" onclick="toggleStage(this)">
+    <div class="stage-num"><span class="num-big">1</span><span class="num-sub">OF 5</span></div>
+    <div class="stage-info"><div class="stage-title">PRE/SELECTION</div><div class="stage-sub">JO Line-up and Fill, Candidate Profiling &amp; Line-up</div></div>
+    <div class="stage-desc-area"></div><span class="stage-arrow">&#9660;</span>
+  </div>
+  <div class="stage-body"><div class="two-col">
+      <div class="future-col">
+        <div class="col-header future-header"><span class="col-dot future-dot">+</span><span class="col-title future-title">FUTURE &mdash; AUTOMATED</span><span class="col-tag future-tag">Platforms: Gsheets + Web Portal + ODOO 19 + n8n</span></div>
+        <div class="cards-list">
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#D6E4F0;color:#2B579A;border:1px solid #B3CCE6">FUTURE PLAN</span>
+        <span class="pcard-name">BX1.1 Applicant Website</span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">0% HOLD</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">0 hrs HOLD</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">Applicant enters and fills up application form and basic photos</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A1.1.1 Self-input basic information and photos</div>
+<div class="d-item">A1.1.2 Triggers scheduled physical/online interview with applicant</div>
+<div class="d-item">A1.1.3 Save per page</div>
+<div class="d-item">A1.1.4 Auto-assign &#x27;Applicant No&#x27;</div>
+<div class="d-item">A1.1.5 On applicant submission — blocks pipeline advancement until 100% complete</div>
+<div class="d-item">A1.1.6 Auto-rejection of expired or invalid documents</div>
+<div class="d-item">A1.1.7 FUTURE: Google Vision AI OCR extraction (propose then confirm)</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">Assign Applicant No</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">APPLICANT</div><div class="appr-name">Fill up</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">RECRUITMENT OFFICER</div><div class="appr-name">Reviews and Approves</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">MANAGER</div><div class="appr-name">Reviews Summary</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">AO1.1.1 Individual data profiles</div>
+<div class="d-item">AO1.1.2 Application rate per month %</div>
+<div class="d-item">AO1.1.3 Batch report/summary</div>
+<div class="d-item">AO1.1.4 Recruitment Analysis and Gaps</div>
+</div>
+      </div></div>
+    </div>
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#D6E4F0;color:#2B579A;border:1px solid #B3CCE6">MANUAL</span>
+        <span class="pcard-name">A1.1 Input/Edit Application Form data</span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">As Is</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">As Is</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">Applicant submits an application form with documents</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A1.1.1 Kizuna portal (Internal use only) - data entry input Applicant details</div>
+<div class="d-item">A1.1.2 Multi-user applicant profile access</div>
+<div class="d-item">A1.1.3 Visible data summary per applicant profile/per batch</div>
+<div class="d-item">A1.1.4 Visible data completeness summary per applicant profile/per batch</div>
+<div class="d-item">A1.1.5 Log notes (activity recording)</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION STAFF</div><div class="appr-name">Fill-up Applicant data</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">Applicant ID + input date</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION STAFF</div><div class="appr-name">Edit/Update Applicant data</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION OFFICER</div><div class="appr-name">Approves</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">Notifies Selection Officer/Manager via email</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">MANAGER</div><div class="appr-name">Summary and Override</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">AO1.1.1 Applicants Summary with input dates and info fields</div>
+<div class="d-item">AO1.1.2 Candidates profiles summary</div>
+<div class="d-item">AO1.1.3 Comments and activities history</div>
+</div>
+      </div></div>
+    </div>
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#FDF0E6;color:#C45911;border:1px solid #F0D0B0">FOR TRIAL</span>
+        <span class="pcard-name">A1.2 JO Fulfilment, Candidate Lineup, Schedule Interview</span>
+        <span class="st-dot st-pending" title="In Build"></span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">Automate 80%</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">1.5hrs savings x 5pax/day</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">Kumiai sends JO requests. Lineup (3x + 1 reserved) candidates based on profile requirements | Revise candidate lineup after Kumiai rejection | Revise candidate profile based on updated/wrong info | Edit JO request details; hotel stay; interview schedule</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A1.2.1 Kizuna portal (Internal use only) - drag-and-drop applicant profiles</div>
+<div class="d-item">A1.2.2 Searchable Candidate data points, stages, manual candidate lineup inside each JO Card</div>
+<div class="d-item">A1.2.3 Expanded JO Card: includes Kumiai requests, trade test schedules, calendar, company trip and hotel stay and interview details</div>
+<div class="d-item">A1.2.4 Calendar Interview Schedule (Time/Blocking) &amp; Smart Scheduling of auxiliary activities eg trade tests</div>
+<div class="d-item">A1.2.5 Auto-generate candidate profile pdf, trade test video links, click-email to Kumiai</div>
+<div class="d-item">A1.2.6 Drag-and-drop JO cards and profiles. Simple UI for updating</div>
+<div class="d-item">A1.2.7 Log notes (activity recording)</div>
+<div class="d-item">A1.2.8 Admin access - multi-period data, security, Kumiai and candidates management</div>
+<div class="d-item">A1.2.9 [FUTURE] Import data from Applicant website and Hoshi Recruit App</div>
+<div class="d-item">A1.2.10 Manual data entry of Candidate, JO, Interview Schedule data, status and stage</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION STAFF</div><div class="appr-name">Candidate Profiles + JO Cards</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION STAFF</div><div class="appr-name">Data Entry, Prepare Lineup</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION OFFICER</div><div class="appr-name">Approves/Updates/Summary</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">Notifies Team regarding dates/times via email</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">Notifies Kumiai via email</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">MANAGER</div><div class="appr-name">Summary and Override</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">AO1.2.1 JO Requests Summary with dates and info fields</div>
+<div class="d-item">AO1.2.2 Candidates profiles summary</div>
+<div class="d-item">AO1.2.3 JO-to-candidate lineup</div>
+<div class="d-item">AO1.2.4 Comments and activities history (log notes)</div>
+<div class="d-item">AO1.2.5 Calendar Schedule</div>
+</div>
+      </div></div>
+    </div>
+        </div>
+      </div>
+      <div class="manual-col">
+        <div class="col-header manual-header"><span class="col-dot manual-dot">&#9998;</span><span class="col-title manual-title">CURRENT &mdash; TRADITIONAL</span><span class="col-tag manual-tag">PAPER + EXCEL + GSHEET + EMAIL + PHONE</span></div>
+        <div class="pain-list">
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C1.1 Applicants walk-in the office. Submits Application forms and docs</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C1.2 Front Desk Give Google Form and IQ Test. Check documents based on paper checklist</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C1.3 Nurse Checks bio-measures.</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C1.4 Applicant interview and Input Candidate Profiles in Porters.</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C1.5 Assemble candidate list by manual sorting, from Porters. Email Candidate Profile to Kumiai</span></div>
+        </div>
+      </div>
+    </div></div>
+</div>
+
+<div class="stage-section" id="stage-2">
+  <div class="stage-banner" onclick="toggleStage(this)">
+    <div class="stage-num"><span class="num-big">2</span><span class="num-sub">OF 5</span></div>
+    <div class="stage-info"><div class="stage-title">SELECTION</div><div class="stage-sub">Trade Tests &amp; Assessment | Interview | Confirm Candidate</div></div>
+    <div class="stage-desc-area"></div><span class="stage-arrow">&#9660;</span>
+  </div>
+  <div class="stage-body"><div class="two-col">
+      <div class="future-col">
+        <div class="col-header future-header"><span class="col-dot future-dot">+</span><span class="col-title future-title">FUTURE &mdash; AUTOMATED</span><span class="col-tag future-tag">Platforms: Gsheets + Web Portal + ODOO 19 + n8n</span></div>
+        <div class="cards-list">
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#D6E4F0;color:#2B579A;border:1px solid #B3CCE6">MANUAL</span>
+        <span class="pcard-name">A2.1 Trade Tests Media and Data Points Inputs</span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">As Is</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">As Is</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">Trade Test media collected</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A2.1.1 -</div>
+<div class="d-item">A2.1.2 -</div>
+<div class="d-item">A2.1.3 -</div>
+<div class="d-item">A2.1.4 -</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">IT STAFF</div><div class="appr-name">Collect Media</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION OFFICER</div><div class="appr-name">Reviews</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">CLIENT MANAGER</div><div class="appr-name"></div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285"></div><div class="appr-name"></div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Curated shortlist with match scores</div>
+</div>
+      </div></div>
+    </div>
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#D6E4F0;color:#2B579A;border:1px solid #B3CCE6">MANUAL</span>
+        <span class="pcard-name">A2.2 Online Interview/Selection</span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">As Is</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">As Is</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">Kumiai requests for online interview/selection process</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A2.2.1 Same as current online interview process</div>
+<div class="d-item">A2.2.2 -</div>
+<div class="d-item">A2.2.3 -</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION STAFF</div><div class="appr-name">Update candidate profile for &#x27;Interview Type&#x27;, complete profile data and trade test links</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION OFFICER</div><div class="appr-name">Verify candidate lineup, fulfil Kumiai requests, until selected</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#2B579A">KUMIAI</div><div class="appr-name">Evaluate &amp; Select</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">AO2.2.1 -</div>
+<div class="d-item">Overdue registration exception report</div>
+</div>
+      </div></div>
+    </div>
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#D6E4F0;color:#2B579A;border:1px solid #B3CCE6">MANUAL</span>
+        <span class="pcard-name">A2.3 Physical Interview/Selection</span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">As Is</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">As Is</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">Kumiai requests for physical interview/selection process</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A2.3.1 As is</div>
+<div class="d-item">A2.3.2 -</div>
+<div class="d-item">A2.3.3 -</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION STAFF</div><div class="appr-name">Update candidate profile for &#x27;Interview Type&#x27;, complete profile data and trade test links</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION OFFICER</div><div class="appr-name">Verify candidate lineup, fulfil Kumiai requests, until selected</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#2B579A">KUMIAI</div><div class="appr-name">Evaluate &amp; Select</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">AO2.3.1 -</div>
+<div class="d-item">AO2.3.2 -</div>
+</div>
+      </div></div>
+    </div>
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#FDF0E6;color:#C45911;border:1px solid #F0D0B0">FOR TRIAL</span>
+        <span class="pcard-name">A2.4 Portal Selection</span>
+        <span class="st-dot st-pending" title="In Build"></span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">**%</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">0hrs savings x 0pax</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">Kumiai chooses candidate solely on Kizuna portal</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A2.4.1 Password-protected portal page, link sent via email</div>
+<div class="d-item">A2.4.2 Multi-candidate profiles via side-by-side presentation</div>
+<div class="d-item">A2.4.3 -</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION STAFF</div><div class="appr-name">Update candidate profile for &#x27;Interview Type&#x27;, complete profile data and trade test links</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION OFFICER</div><div class="appr-name">Verify candidate lineup, fulfil Kumiai requests, until selected</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#2B579A">KUMIAI</div><div class="appr-name">Evaluate &amp; Select</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">AO2.4.1 Portal - candidate profiles comparison page</div>
+<div class="d-item"></div>
+</div>
+      </div></div>
+    </div>
+        </div>
+      </div>
+      <div class="manual-col">
+        <div class="col-header manual-header"><span class="col-dot manual-dot">&#9998;</span><span class="col-title manual-title">CURRENT &mdash; TRADITIONAL</span><span class="col-tag manual-tag">PAPER + EXCEL + GSHEET + EMAIL + PHONE</span></div>
+        <div class="pain-list">
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C2.1 Schedule candidates for trade tests. IT staff conduct and record trade tests. Edit media. Send media.</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C2.2 Physical: Schedule the visit, hotel and vehicle service. Receive/Host the Kumiai and Company for selection trip</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C2.3 Online: Schedule zoom call interview, inform candidates of schedule</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C2.4 Update and consolidate Interview Calendar</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C2.5 Upon selection, email Kumiai. Start language training and documents. Update Porters.</span></div>
+        </div>
+      </div>
+    </div></div>
+</div>
+
+<div class="stage-section" id="stage-3">
+  <div class="stage-banner" onclick="toggleStage(this)">
+    <div class="stage-num"><span class="num-big">3</span><span class="num-sub">OF 5</span></div>
+    <div class="stage-info"><div class="stage-title">PRE-DEPLOYMENT</div><div class="stage-sub">Pre-Deployment | Submit Documents | Kumiai Updates</div></div>
+    <div class="stage-desc-area"></div><span class="stage-arrow">&#9660;</span>
+  </div>
+  <div class="stage-body"><div class="two-col">
+      <div class="future-col">
+        <div class="col-header future-header"><span class="col-dot future-dot">+</span><span class="col-title future-title">FUTURE &mdash; AUTOMATED</span><span class="col-tag future-tag">Platforms: Gsheets + Web Portal + ODOO 19 + n8n</span></div>
+        <div class="cards-list">
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#FDF0E6;color:#C45911;border:1px solid #F0D0B0">IN DEVT</span>
+        <span class="pcard-name">A3.1 Candidate Status Update</span>
+        <span class="st-dot st-pending" title="In Build"></span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">**%</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">0hrs savings x 0pax</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">Kumiai approves selected candidate - becomes trainee</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A3.1.1 Triggers COE-related documentation deadlines</div>
+<div class="d-item">A3.1.2 Triggers other deadlines for pre-deployment</div>
+<div class="d-item">A3.1.3 [Manual] Conduct/Attendance + monthly scores to Odoo worker profile</div>
+<div class="d-item">A3.1.4 Batch grouping engine (cohort management)</div>
+<div class="d-item">A3.1.5 Auto-syncs Batch and Workers readiness statuses</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION STAFF</div><div class="appr-name">[Manual] Input selected candidates</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">SELECTION OFFICER</div><div class="appr-name">Approve</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">STAFF</div><div class="appr-name">Deadlines Alert</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">MANAGER</div><div class="appr-name">Deadlines Alert</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Jap Language score progression per trainee</div>
+<div class="d-item">Target deadline alerts</div>
+<div class="d-item">Batch readiness (training and documentation) % dashboard</div>
+<div class="d-item">Training-to-deployment conversion rate</div>
+</div>
+      </div></div>
+    </div>
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#FDF0E6;color:#C45911;border:1px solid #F0D0B0">IN DEVT</span>
+        <span class="pcard-name">A3.2 MWO certificate for Company</span>
+        <span class="st-dot st-pending" title="In Build"></span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">**%</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">0hrs savings x 0pax</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">When candidate is selected</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A3.2.1 Automated progression summary</div>
+<div class="d-item">A3.2.2 -Auto-fill docs for MWO Certificate</div>
+<div class="d-item">-</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">Auto Generate</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">TEACHER</div><div class="appr-name">Review</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">MANAGER</div><div class="appr-name">Approve</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">Auto Email</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Email monthly Trainee Completion Report to Kumiai</div>
+<div class="d-item">Worker Per Kumiai/per Batch</div>
+<div class="d-item">Early warning flags for delayed trainees</div>
+</div>
+      </div></div>
+    </div>
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#FDF0E6;color:#C45911;border:1px solid #F0D0B0">FOR TRIAL</span>
+        <span class="pcard-name">A3.3 Generate Documents - Contract, Docs for COE</span>
+        <span class="st-dot st-pending" title="In Build"></span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">**%</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">0hrs savings x 0pax</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">On placement confirmation — auto-generates employment contract from System template</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A3.3.1 Template engine — TITP / SSW1 / SSW2 contract variants</div>
+<div class="d-item">A3.3.2 Auto-populates worker, kumiai, wage, duration fields, and others</div>
+<div class="d-item">A3.3.3 PDF generation</div>
+<div class="d-item">A3.3.4 Version control — tracks all contract amendments</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">System Generate</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">DOCUMENTS OFFICER</div><div class="appr-name">Check</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">TRAINEE</div><div class="appr-name">Check and sign</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#2B579A">?KUMIAI</div><div class="appr-name">(?on hold for discussion)</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">(70% complete) Contract draft for trainee</div>
+<div class="d-item">(Manual) Contract status tracker (from draft to signed to filed)</div>
+<div class="d-item">Ready contract archive in Odoo Docs</div>
+</div>
+      </div></div>
+    </div>
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#D6E4F0;color:#2B579A;border:1px solid #B3CCE6">MANUAL</span>
+        <span class="pcard-name">A3.4 Receive COE - Generate Final Docs for EOC, visa, ticket</span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">**%</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">0hrs savings x 0pax</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">On receipt of COE — auto-generates employment contract from Odoo template</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A3.4.1 [Manual] Update EOC, Visa, Ticket statuses</div>
+<div class="d-item">A3.4.2 ?Auto-updates Kumiai?</div>
+<div class="d-item">A3.4.3 -</div>
+<div class="d-item">A3.4.4 -</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">TICKET OFFICER</div><div class="appr-name">[Manual] System status update</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">DEPLOY MANAGER</div><div class="appr-name">Check</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">MANAGER</div><div class="appr-name">(SIGN-OFF)</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Post-COE documents</div>
+<div class="d-item">Pre-deployment worker status tracker</div>
+</div>
+      </div></div>
+    </div>
+        </div>
+      </div>
+      <div class="manual-col">
+        <div class="col-header manual-header"><span class="col-dot manual-dot">&#9998;</span><span class="col-title manual-title">CURRENT &mdash; TRADITIONAL</span><span class="col-tag manual-tag">PAPER + EXCEL + GSHEET + EMAIL + PHONE</span></div>
+        <div class="pain-list">
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C3A.1 TRAINING PATH: Attend 9 modules. Record attendance sheets. Record weekly Japanese grades.</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C3A.2 Email Kumiai with individual results monthly (4x per training period)</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C3A.3 Prepare for JLPT N5 in the last month</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C3A.4 Insert ESD-related language training requirements</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C3B.1 DOCUMENTS PATH: Type and prepare OTIT Docs, MWO Docs, DMW Docs for COE</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C3B.2 After COE, docs for EOC, visa, and air ticket</span></div>
+        </div>
+      </div>
+    </div></div>
+</div>
+
+<div class="stage-section" id="stage-4">
+  <div class="stage-banner" onclick="toggleStage(this)">
+    <div class="stage-num"><span class="num-big">4</span><span class="num-sub">OF 5</span></div>
+    <div class="stage-info"><div class="stage-title">POST-DEPLOYMENT</div><div class="stage-sub">Invoice Alert | Welfare | Document Expiry</div></div>
+    <div class="stage-desc-area"></div><span class="stage-arrow">&#9660;</span>
+  </div>
+  <div class="stage-body"><div class="two-col">
+      <div class="future-col">
+        <div class="col-header future-header"><span class="col-dot future-dot">+</span><span class="col-title future-title">FUTURE &mdash; AUTOMATED</span><span class="col-tag future-tag">Platforms: Gsheets + Web Portal + ODOO 19 + n8n</span></div>
+        <div class="cards-list">
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#FDF0E6;color:#C45911;border:1px solid #F0D0B0">IN DEVT</span>
+        <span class="pcard-name">A4.1 Confirm Arrival, Placement Welfare</span>
+        <span class="st-dot st-pending" title="In Build"></span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">**%</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">0hrs savings x 0pax</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">On worker arrival date in Japan — based on flight date &amp; time, settle in until stable</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A4.1.1 [Manual] Update worker&#x27;s arrival status in Japan</div>
+<div class="d-item">A4.1.2 Triggers Invoicing draft in Accounting</div>
+<div class="d-item">A4.1.3 Sends update alert to respective staff (HR, Admin, Acctg)</div>
+<div class="d-item">A4.1.4 Version control — tracks changes</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">WELFARE OFFICER</div><div class="appr-name">update and approve</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">HR MANAGER</div><div class="appr-name">Alert</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">ACCOUNTING MANAGER</div><div class="appr-name">Alert</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">ADMIN STAFF</div><div class="appr-name">Alert</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Batch Status Summary</div>
+<div class="d-item">Invoice Summary</div>
+</div>
+      </div></div>
+    </div>
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#FDF0E6;color:#C45911;border:1px solid #F0D0B0">IN DEVT</span>
+        <span class="pcard-name">A4.2 Invoice Clients</span>
+        <span class="st-dot st-pending" title="In Build"></span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">**%</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">0hrs savings x 0pax</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">On confirmed arrival in Japan — auto-generates placement fee invoices | On monthly invoice dates - auto-generate invoice</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A4.2.1 Fee calculation engine (per worker x rate x kumiai terms)</div>
+<div class="d-item">A4.2.2 Auto-invoice via Odoo Accounting module</div>
+<div class="d-item">A4.2.3 Receivables aging tracker with auto-reminders at 15/30/60 days</div>
+<div class="d-item">A4.2.4 Invoicing stops depending on worker status</div>
+<div class="d-item">A4.2.5 [Manual Input] Update/Revise invoice data such as dates, amounts</div>
+<div class="d-item">A4.2.6 Escalates issues/alerts to Manager, gives a Weekly Summary</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">Auto Generate</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">ACCOUNTING OFFICER</div><div class="appr-name">Check Invoice</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">ACCOUNTING MANAGER</div><div class="appr-name">Approve Invoice</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Missed Invoice and Invoice statuses</div>
+<div class="d-item">Revenue Summary per kumiai / per trade / per month</div>
+<div class="d-item">Outstanding receivables aging report</div>
+<div class="d-item">Placement fee forecast vs. actuals</div>
+</div>
+      </div></div>
+    </div>
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#FDF0E6;color:#C45911;border:1px solid #F0D0B0">IN DEVT</span>
+        <span class="pcard-name">A4.3 Get Client Feedback on Worker Performance</span>
+        <span class="st-dot st-pending" title="In Build"></span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">**%</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">0hrs savings x 0pax</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">Annually or Bi-annual performance and attendance evaluation from Kumiai or client</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A4.3.1 Fill up Evaluation Sheet in email and auto-fills Kiroku database</div>
+<div class="d-item">A4.3.2 Tiered alert grading (green, amber, red, critical</div>
+<div class="d-item">A4.3.3 Escalates issues/alerts to Manager, individually or by batch. Gives Weekly Summary</div>
+<div class="d-item">A4.3.4 Upon Mgr approval, Welfare Officer contacts worker for performance feedback</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO-EMAIL</div><div class="appr-name">Auto-send Evaluation in Email</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#2B579A">KUMIAI</div><div class="appr-name">KUMIAI answer and confirm</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">MANAGER</div><div class="appr-name">Review Summary</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">WELFARE OFFICER</div><div class="appr-name">Review Summary/Update Worker Profile</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Performance Evaluation Sheet</div>
+<div class="d-item">Worker Performance dashboard</div>
+<div class="d-item">Tiered grading Workers summary</div>
+</div>
+      </div></div>
+    </div>
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#FDF0E6;color:#C45911;border:1px solid #F0D0B0">IN DEVT</span>
+        <span class="pcard-name">A4.4 Document Expiry Alerts</span>
+        <span class="st-dot st-pending" title="In Build"></span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">**%</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">0hrs savings x 0pax</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">Weekly scans — flags documents expiring within 90/60/30/15 days</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A4.4.1. KIROKU monitors all doc types: visa, passport, COE, insurance</div>
+<div class="d-item">A4.4.2. Tiered alert severity (green, amber, red, critical)</div>
+<div class="d-item">A4.4.3. Auto-emails to responsible parties with renewal instructions</div>
+<div class="d-item">A4.4.4. Escalates issues/alerts to Manager, individually or by batch. Gives Weekly Summary</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">Odoo Action 24/7</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">DOCU OFFICER</div><div class="appr-name">for action</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">HR MGR</div><div class="appr-name">Review Weekly Summary</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Expiry calendar report — next 90 days</div>
+<div class="d-item">Compliance rate report - per Kumiai</div>
+</div>
+      </div></div>
+    </div>
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#FDF0E6;color:#C45911;border:1px solid #F0D0B0">IN DEVT</span>
+        <span class="pcard-name">A4.5 Worker Welfare and Status</span>
+        <span class="st-dot st-pending" title="In Build"></span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">**%</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">0hrs savings x 0pax</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">Weekly Scans based on scheduled intervals (30/60/90 days post-deployment) + random flags</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A4.5.1 Automated monthly welfare survey via email/LINE, delivered to Kiroku database</div>
+<div class="d-item">A4.5.2 Analyze worker sentiment from worker responses</div>
+<div class="d-item">A4.5.3 [Manual Input] Welfare officer fills up welfare survey and incidents on specific workers</div>
+<div class="d-item">A4.5.4 Triggers escalation on negative signals. Weekly Summary on welfare and worker status</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO-SEND</div><div class="appr-name">Auto-send Survey</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#2B579A">KUMIAI</div><div class="appr-name">Answer Survey</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">WELFARE OFFICER</div><div class="appr-name">Review and Noted, for action</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">MANAGER</div><div class="appr-name">Review Weekly Summary</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Welfare report per worker / per Kumiai</div>
+<div class="d-item">Early warning flags/reports for at-risk workers</div>
+<div class="d-item">For-Action List Summary</div>
+</div>
+      </div></div>
+    </div>
+        </div>
+      </div>
+      <div class="manual-col">
+        <div class="col-header manual-header"><span class="col-dot manual-dot">&#9998;</span><span class="col-title manual-title">CURRENT &mdash; TRADITIONAL</span><span class="col-tag manual-tag">PAPER + EXCEL + GSHEET + EMAIL + PHONE</span></div>
+        <div class="pain-list">
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C4.1 Confirm arrival in Japan and entry to company</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C4.2 Acctg staff make and send invoice clients</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C4.3 Welfare Officer check worker welfare and status</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C4.4 oo</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C4.5 oo</span></div>
+        </div>
+      </div>
+    </div></div>
+</div>
+
+<div class="stage-section" id="stage-5">
+  <div class="stage-banner" onclick="toggleStage(this)">
+    <div class="stage-num"><span class="num-big">5</span><span class="num-sub">OF 5</span></div>
+    <div class="stage-info"><div class="stage-title">REDEPLOYMENT (ON HOLD)</div><div class="stage-sub">Assess Personnel | Renew Contract | Next Country Postings</div></div>
+    <div class="stage-desc-area"></div><span class="stage-arrow">&#9660;</span>
+  </div>
+  <div class="stage-body"><div class="two-col">
+      <div class="future-col">
+        <div class="col-header future-header"><span class="col-dot future-dot">+</span><span class="col-title future-title">FUTURE &mdash; AUTOMATED</span><span class="col-tag future-tag">Platforms: Gsheets + Web Portal + ODOO 19 + n8n</span></div>
+        <div class="cards-list">
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#D6E4F0;color:#2B579A;border:1px solid #B3CCE6">FUTURE PLAN</span>
+        <span class="pcard-name">A5.1 Document Expiry Alerts</span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">**%</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">0hrs savings x 0pax</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">Daily scan — flags documents expiring within 90/60/30/15 days</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A5.1.1 KIROKU monitors all doc types: visa, passport, COE, insurance</div>
+<div class="d-item">A5.1.2 Tiered alert severity (green, amber, red, critical)</div>
+<div class="d-item">A5.1.3 Auto-emails to responsible parties with renewal instructions</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">KIROKU 24/7</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">--</div><div class="appr-name">-- (ACTION)</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#8B6914">SIR</div><div class="appr-name">SIR (CRITICAL ONLY)</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Expiry calendar heatmap — next 90 days</div>
+<div class="d-item">Zero-lapse compliance rate per kumiai</div>
+</div>
+      </div></div>
+    </div>
+    <div class="pcard" onclick="toggleP(this)">
+      <div class="pcard-bar">
+        <span class="badge" style="background:#D6E4F0;color:#2B579A;border:1px solid #B3CCE6">FUTURE PLAN</span>
+        <span class="pcard-name">A5.2 Redeploy Person - SSW Upgrade or Other Countries</span>
+        <span class="card-tags"><span class="card-tag" style="background:#E2F0E8;color:#217346;border:1px solid #21734622">**%</span><span class="card-tag" style="background:#FDF0E6;color:#C45911;border:1px solid #C4591122">0hrs savings x 0pax</span></span>
+        <span class="pcard-arrow">&#9662;</span>
+      </div>
+      <div class="pcard-body"><div class="pcard-inner">
+      <div class="det-grid">
+        <div class="d-group"><div class="d-label lbl-trigger">Trigger</div><div class="d-item">Finishing contract in 90/60/30 days</div></div>
+        <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">A5.2.1 SSW-specific regulatory timeline engine</div>
+<div class="d-item">A5.2.2 Assess worker&#x27;s performance, attend checkups and trade tests</div>
+<div class="d-item">A5.2.3 Update personal bio-data via Worker ID and database</div>
+<div class="d-item">A5.2.4 Auto-escalation: staff, Mgr, CEO, Kumiai notification</div>
+<div class="d-item">A5.2.5 Government portal submission tracking</div>
+</div>
+      </div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">SYSTEM DETECT</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">--</div><div class="appr-name">--</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#8B6914">SIR</div><div class="appr-name">SIR</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#2B579A">KUMIAI</div><div class="appr-name">KUMIAI (NOTIFY)</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Visa status distribution (active / expiring / at-risk)</div>
+<div class="d-item">Escalation response time metrics</div>
+</div>
+      </div></div>
+    </div>
+        </div>
+      </div>
+      <div class="manual-col">
+        <div class="col-header manual-header"><span class="col-dot manual-dot">&#9998;</span><span class="col-title manual-title">CURRENT &mdash; TRADITIONAL</span><span class="col-tag manual-tag">PAPER + EXCEL + GSHEET + EMAIL + PHONE</span></div>
+        <div class="pain-list">
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C5.1</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C5.2</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C5.3</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C5.4</span></div>
+          <div class="pain-row"><span class="pain-icon">&#9998;</span><span>C5.5</span></div>
+        </div>
+      </div>
+    </div></div>
+</div>
+
+<div class="stage-section cross-section" id="cross-stage">
+  <div class="stage-banner cross-banner" onclick="toggleStage(this)">
+    <div class="stage-num cross-num"><span class="num-big">&infin;</span></div>
+    <div class="stage-info"><div class="stage-title" style="color:#7030A0">PIPELINE STALL DETECTION (DO NOT READ- ON HOLD)</div><div class="stage-sub">Monitors all 5 stages for bottlenecks exceeding SLA thresholds</div></div>
+    <span class="stage-arrow">&#9660;</span>
+  </div>
+  <div class="stage-body"><div class="cross-inner">
+      <div class="d-group"><div class="d-label lbl-features">System Features</div><div class="d-item">SLA timer per pipeline stage (configurable per kumiai)</div>
+<div class="d-item">Auto-escalation when candidate stalls at any gate beyond threshold days</div>
+<div class="d-item">Bottleneck visualization — identifies systemic slowdowns</div>
+</div>
+      <div class="d-group"><div class="d-label lbl-approval">Approval Matrix</div><div class="appr-flow"><div class="appr-card"><div class="appr-role" style="color:#0B7285">AUTO</div><div class="appr-name">SYSTEM SCAN</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">OFFICER</div><div class="appr-name">Update &amp; Approve</div></div>
+<span class="arrow-sep">&rarr;</span>
+<div class="appr-card"><div class="appr-role" style="color:#0B7285">MANAGER</div><div class="appr-name">Review &amp; Override</div></div>
+</div></div>
+      <div class="d-group"><div class="d-label lbl-data">Data Outputs</div><div class="d-item">Avg days per stage — actual vs. target</div>
+<div class="d-item">Deployment cycle time (target: 4 months from intake to arrival)</div>
+<div class="d-item">Stall frequency heatmap by stage and kumiai</div>
+</div>
+  </div></div>
+</div>
+
+<div class="metrics-strip">
+  <div class="metric"><div class="metric-val">5 to 4 mo</div><div class="metric-lbl">Cycle Compression</div><div class="metric-sub">Avg deployment intake to arrival</div></div>
+  <div class="metric"><div class="metric-val">24/7</div><div class="metric-lbl">Autonomous Monitoring</div><div class="metric-sub">vs. manual monitoring </div></div>
+  <div class="metric"><div class="metric-val">XX</div><div class="metric-lbl">Automated Processes</div><div class="metric-sub">P1-P6 live, P7-P14 in build</div></div>
+  <div class="metric"><div class="metric-val">25x</div><div class="metric-lbl">ROI Target</div><div class="metric-sub">Revenue capture + cost savings</div></div>
+</div>
+
+<div class="footer"><div>KOSEI Intelligence — Workflow Process Diagram v1.1 — Confidential</div><button class="ctrl-btn" onclick="printShortBond()">&#128424; Print Short Bond</button></div>
+
+<script>
+function toggleStage(el){el.closest('.stage-section').classList.toggle('open')}
+function toggleP(el){el.classList.toggle('open')}
+function expandAll(){document.querySelectorAll('.stage-section').forEach(function(s){s.classList.add('open')});document.querySelectorAll('.pcard').forEach(function(p){p.classList.add('open')})}
+function collapseAll(){document.querySelectorAll('.stage-section').forEach(function(s){s.classList.remove('open')});document.querySelectorAll('.pcard').forEach(function(p){p.classList.remove('open')})}
+function printShortBond(){var s=document.createElement('style');s.id='psb';s.innerHTML='@page{size:8.5in 13in;margin:0.4in 0.5in}';document.head.appendChild(s);window.print();setTimeout(function(){var e=document.getElementById('psb');if(e)e.remove()},1000)}
+</script>
+</body>
+</html>
