@@ -375,6 +375,106 @@
       "english": "Pre-Deployment | Submit Documents | Kumiai Updates",
       "cards": [
         {
+          {
+  "section": "Pre-Deployment Documents Checklist",
+  "stage": 3,
+  "version": "1.2",
+  "phases": [
+    {
+      "phase": 1,
+      "title": "Pre-COE Documents (PH Side)",
+      "color": "orange",
+      "groups": [
+        {
+          "name": "OTIT Documents (TITP)",
+          "documents": [
+            { "code": "D1.1", "name": "Technical Intern Training Plan" },
+            { "code": "D1.2", "name": "Application for Certificate of Eligibility (to Japan Immigration)" },
+            { "code": "D1.3", "name": "Trainee Employment Contract (JP/EN)" },
+            { "code": "D1.4", "name": "Trainee CV / Resume (translated)" },
+            { "code": "D1.5", "name": "Passport copy (data page)" },
+            { "code": "D1.6", "name": "Photo (white background, ICAO compliant)" }
+          ]
+        },
+        {
+          "name": "MWO Documents",
+          "documents": [
+            { "code": "D2.1", "name": "MWO Verification / Authentication" },
+            { "code": "D2.2", "name": "Employer Company Profile" },
+            { "code": "D2.3", "name": "Notarized Employment Contract" },
+            { "code": "D2.4", "name": "Job Order / Manpower Request from Kumiai" },
+            { "code": "D2.5", "name": "Special Power of Attorney (SPA)" }
+          ]
+        },
+        {
+          "name": "DMW Documents",
+          "documents": [
+            { "code": "D3.1", "name": "OEC (Overseas Employment Certificate)" },
+            { "code": "D3.2", "name": "Worker Information Sheet" },
+            { "code": "D3.3", "name": "Medical Certificate (PEME)" },
+            { "code": "D3.4", "name": "NBI Clearance" },
+            { "code": "D3.5", "name": "Birth Certificate (PSA)" },
+            { "code": "D3.6", "name": "Marriage Certificate (if applicable, PSA)" }
+          ]
+        },
+        {
+          "name": "Contract & Training Records",
+          "documents": [
+            { "code": "D4.1", "name": "Employment Contract - TITP / SSW1 / SSW2 variant" },
+            { "code": "D4.2", "name": "Training Attendance Records (9 modules)" },
+            { "code": "D4.3", "name": "Japanese Language Scores (weekly)" },
+            { "code": "D4.4", "name": "JLPT N5 Certificate" },
+            { "code": "D4.5", "name": "ESD-related Language Training Output" }
+          ]
+        }
+      ]
+    },
+    {
+      "phase": 2,
+      "title": "Post-COE Documents (Final Deployment)",
+      "color": "green",
+      "groups": [
+        {
+          "name": "COE Receipt (from Japan)",
+          "documents": [
+            { "code": "D5.1", "name": "Certificate of Eligibility (original, from Japan Immigration)" },
+            { "code": "D5.2", "name": "Kumiai endorsement letter" }
+          ]
+        },
+        {
+          "name": "EOC / Exit Clearance",
+          "documents": [
+            { "code": "D6.1", "name": "EOC Application" },
+            { "code": "D6.2", "name": "Updated OEC (issued post-COE)" },
+            { "code": "D6.3", "name": "DMW Clearance for Departure" },
+            { "code": "D6.4", "name": "Anti-Illegal Recruitment Seminar Cert" }
+          ]
+        },
+        {
+          "name": "Visa Processing",
+          "documents": [
+            { "code": "D7.1", "name": "Japanese Visa Application Form" },
+            { "code": "D7.2", "name": "Embassy Submission Receipt" },
+            { "code": "D7.3", "name": "Issued Japan Visa (stamped)" },
+            { "code": "D7.4", "name": "Passport with visa attached" }
+          ]
+        },
+        {
+          "name": "Travel & Deployment",
+          "documents": [
+            { "code": "D8.1", "name": "Air Ticket / Flight Itinerary" },
+            { "code": "D8.2", "name": "Travel / Health Insurance" },
+            { "code": "D8.3", "name": "Hotel Booking (if needed pre-flight)" },
+            { "code": "D8.4", "name": "PDOS Certificate (Pre-Departure Orientation)" },
+            { "code": "D8.5", "name": "Departure Checklist (final hand-off to trainee)" },
+            { "code": "D8.6", "name": "Emergency Contact Information Card" }
+          ]
+        }
+      ]
+    }
+  ],
+  "note": "This list serves as a quick reference. The actual document set may vary per Kumiai, trade, and visa category (TITP / SSW1 / SSW2). All documents are tracked under the KIROKU database with version control and expiry monitoring."
+}
           "id": "IN DEVT",
           "status": "pending",
           "name": "A3.1 Candidate Status Update",
