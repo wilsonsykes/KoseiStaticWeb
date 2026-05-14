@@ -78,6 +78,46 @@ def render_card(card, badge_styles, chip_colors, colors):
     h += '</div>\n      </div></div>\n    </div>\n'
     return h
 
+def is_section_block(entry):
+    return isinstance(entry, dict) and ("section" in entry and "phases" in entry)
+
+def render_section_block(block):
+    h = '    <div class="pcard checklist-card" onclick="toggleP(this)">\n      <div class="pcard-bar">\n'
+    h += '        <span class="badge checklist-badge">SECTION</span>\n'
+    h += f'        <span class="pcard-name">{esc(block.get("section","Checklist"))}</span>\n'
+    tags = []
+    if block.get("version"):
+        tags.append(f'v{esc(block.get("version"))}')
+    if block.get("stage") is not None:
+        tags.append(f'Stage {esc(block.get("stage"))}')
+    if tags:
+        h += '        <span class="card-tags">'
+        for t in tags:
+            h += f'<span class="card-tag checklist-tag">{t}</span>'
+        h += '</span>\n'
+    h += '        <span class="pcard-arrow">&#9662;</span>\n      </div>\n'
+    h += '      <div class="pcard-body"><div class="pcard-inner checklist-inner">\n'
+    if block.get("note"):
+        h += f'        <div class="check-note">{esc(block.get("note"))}</div>\n'
+    for phase in block.get("phases", []):
+        h += '        <div class="check-phase">\n'
+        h += f'          <div class="check-phase-title">PHASE {esc(phase.get("phase",""))}: {esc(phase.get("title",""))}</div>\n'
+        for group in phase.get("groups", []):
+            h += '          <div class="check-group">\n'
+            h += f'            <div class="check-group-name">{esc(group.get("name",""))}</div>\n'
+            docs = group.get("documents", [])
+            if docs:
+                h += '            <div class="check-docs">\n'
+                for doc in docs:
+                    code = esc(doc.get("code", ""))
+                    name = esc(doc.get("name", ""))
+                    h += f'              <div class="check-doc-row"><span class="check-doc-code">{code}</span><span class="check-doc-name">{name}</span></div>\n'
+                h += '            </div>\n'
+            h += '          </div>\n'
+        h += '        </div>\n'
+    h += '      </div></div>\n    </div>\n'
+    return h
+
 def generate():
     print("\n" + "="*60)
     print("  KOSEI HTML Generator v1.0")
@@ -189,6 +229,19 @@ body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica 
 .pcard-body{{max-height:0;overflow:hidden;transition:max-height .3s ease;border-top:0 solid transparent}}
 .pcard.open .pcard-body{{max-height:1800px;border-top:1px dashed var(--border-light)}}
 .pcard-inner{{padding:12px 14px 14px;background:var(--bg-alt)}}
+.checklist-card{{border-style:dashed}}
+.checklist-badge{{background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe}}
+.checklist-tag{{background:#eef2ff;color:#3730a3;border:1px solid #c7d2fe}}
+.checklist-inner{{background:#fcfcff}}
+.check-note{{font-size:11px;color:#4b5563;padding:8px 10px;border:1px dashed #cbd5e1;border-radius:6px;background:#f8fafc;margin-bottom:10px}}
+.check-phase{{border:1px solid #e5e7eb;border-radius:8px;padding:8px 10px;margin:8px 0;background:#fff}}
+.check-phase-title{{font-size:11px;font-weight:800;color:#1e3a8a;letter-spacing:.4px;margin-bottom:6px;text-transform:uppercase}}
+.check-group{{margin:8px 0 6px}}
+.check-group-name{{font-size:11px;font-weight:700;color:#334155;margin-bottom:5px}}
+.check-docs{{display:grid;gap:4px}}
+.check-doc-row{{display:flex;gap:8px;font-size:11px;color:#334155;line-height:1.4}}
+.check-doc-code{{min-width:52px;font-weight:800;color:#0f766e}}
+.check-doc-name{{flex:1}}
 .card-tags{{display:flex;gap:5px;margin-left:auto;flex-shrink:0}}
 .card-tag{{font-size:9px;font-weight:700;padding:2px 7px;border-radius:3px;white-space:nowrap;letter-spacing:.3px;text-transform:uppercase}}
 .det-grid{{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}}
@@ -254,7 +307,10 @@ body{{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica 
         # Future col
         out += f'      <div class="future-col">\n        <div class="col-header future-header"><span class="col-dot future-dot">+</span><span class="col-title future-title">FUTURE &mdash; AUTOMATED</span><span class="col-tag future-tag">{esc(hoshi.get("tag",""))}</span></div>\n        <div class="cards-list">\n'
         for card in stage.get('cards', []):
-            out += render_card(card, badge_styles, chip_colors, colors)
+            if is_section_block(card):
+                out += render_section_block(card)
+            else:
+                out += render_card(card, badge_styles, chip_colors, colors)
         out += '        </div>\n      </div>\n'
         # Manual col
         out += f'      <div class="manual-col">\n        <div class="col-header manual-header"><span class="col-dot manual-dot">&#9998;</span><span class="col-title manual-title">CURRENT &mdash; TRADITIONAL</span><span class="col-tag manual-tag">{esc(manual_sec.get("tag",""))}</span></div>\n        <div class="pain-list">\n'

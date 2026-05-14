@@ -86,6 +86,9 @@ def ensure_str(errors: list[ValidationError], value: Any, path: str, file: Path)
     errors.append(ValidationError(f"{path} must be a string", file))
     return False
 
+def is_section_block(entry: Any) -> bool:
+    return isinstance(entry, dict) and ("section" in entry and "phases" in entry)
+
 
 def validate_card(card: Any, path: str, errors: list[ValidationError], file: Path) -> None:
     if not expect_type(errors, card, dict, path, file):
@@ -124,6 +127,46 @@ def validate_card(card: Any, path: str, errors: list[ValidationError], file: Pat
             for key in ("text", "bg", "color"):
                 ensure_str(errors, tag.get(key), f"{tp}.{key}", file)
 
+def validate_section_block(block: Any, path: str, errors: list[ValidationError], file: Path) -> None:
+    if not expect_type(errors, block, dict, path, file):
+        return
+
+    ensure_str(errors, block.get("section"), f"{path}.section", file)
+    if "version" in block:
+        ensure_str(errors, block.get("version"), f"{path}.version", file)
+    if "stage" in block and not isinstance(block.get("stage"), (int, str)):
+        errors.append(ValidationError(f"{path}.stage must be int or string", file))
+    if "note" in block:
+        ensure_str(errors, block.get("note"), f"{path}.note", file)
+
+    if not expect_type(errors, block.get("phases"), list, f"{path}.phases", file):
+        return
+    for pi, phase in enumerate(block["phases"]):
+        pp = f"{path}.phases[{pi}]"
+        if not expect_type(errors, phase, dict, pp, file):
+            continue
+        ensure_str(errors, phase.get("title"), f"{pp}.title", file)
+        if "phase" in phase and not isinstance(phase.get("phase"), (int, str)):
+            errors.append(ValidationError(f"{pp}.phase must be int or string", file))
+        if "color" in phase:
+            ensure_str(errors, phase.get("color"), f"{pp}.color", file)
+
+        if not expect_type(errors, phase.get("groups"), list, f"{pp}.groups", file):
+            continue
+        for gi, group in enumerate(phase["groups"]):
+            gp = f"{pp}.groups[{gi}]"
+            if not expect_type(errors, group, dict, gp, file):
+                continue
+            ensure_str(errors, group.get("name"), f"{gp}.name", file)
+            if not expect_type(errors, group.get("documents"), list, f"{gp}.documents", file):
+                continue
+            for di, doc in enumerate(group["documents"]):
+                dp = f"{gp}.documents[{di}]"
+                if not expect_type(errors, doc, dict, dp, file):
+                    continue
+                ensure_str(errors, doc.get("code"), f"{dp}.code", file)
+                ensure_str(errors, doc.get("name"), f"{dp}.name", file)
+
 
 def validate_content(content: Any) -> list[ValidationError]:
     errors: list[ValidationError] = []
@@ -144,7 +187,11 @@ def validate_content(content: Any) -> list[ValidationError]:
                 ensure_str(errors, stage.get(key), f"{sp}.{key}", file)
             if expect_type(errors, stage.get("cards"), list, f"{sp}.cards", file):
                 for ci, card in enumerate(stage["cards"]):
-                    validate_card(card, f"{sp}.cards[{ci}]", errors, file)
+                    cp = f"{sp}.cards[{ci}]"
+                    if is_section_block(card):
+                        validate_section_block(card, cp, errors, file)
+                    else:
+                        validate_card(card, cp, errors, file)
 
     if expect_type(errors, content.get("manual_stages"), list, "$.manual_stages", file):
         for mi, stage in enumerate(content["manual_stages"]):
