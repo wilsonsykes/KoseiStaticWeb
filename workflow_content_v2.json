@@ -370,6 +370,11 @@
       ]
     },
     {
+      "kanji": "訓練",
+      "romaji": "Pre-deployment",
+      "english": "Pre-Deployment | Submit Documents | Kumiai Updates",
+      "cards": [
+         {
   "section": "Pre-Deployment Documents Checklist",
   "stage": 3,
   "version": "1.2",
@@ -469,11 +474,6 @@
   ],
   "note": "This list serves as a quick reference. The actual document set may vary per Kumiai, trade, and visa category (TITP / SSW1 / SSW2). All documents are tracked under the KIROKU database with version control and expiry monitoring."
 },
-    {
-      "kanji": "訓練",
-      "romaji": "Pre-deployment",
-      "english": "Pre-Deployment | Submit Documents | Kumiai Updates",
-      "cards": [
         {
           "id": "IN DEVT",
           "status": "pending",
